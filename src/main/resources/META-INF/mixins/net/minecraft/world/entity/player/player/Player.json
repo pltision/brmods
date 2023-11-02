@@ -1,0 +1,6 @@
+{
+  "target": "net.minecraft.world.entity.player.Player",
+  "mixins": [
+    "yee.pltision.mushroom.capability.MixinPlayer"
+  ]
+}

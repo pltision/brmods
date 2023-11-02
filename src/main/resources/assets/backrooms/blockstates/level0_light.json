@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "backrooms:block/level0_light_x"
+    },
+    "axis=z": {
+      "model": "backrooms:block/level0_light_z"
+    }
+  }
+}

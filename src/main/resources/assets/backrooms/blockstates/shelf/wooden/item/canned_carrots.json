@@ -1,0 +1,79 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model":"backrooms:block/shelf/wooden"
+      }
+    },
+    {
+      "when": {
+        "stack": "1|2|3|4"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_10"
+        },
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_11"
+        },
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_12"
+        },
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_13"
+        },
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_14"
+        },
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_15"
+        }
+      ]
+    },
+    {
+      "when": {
+        "stack": "2|3|4"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_20"
+        },
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_21"
+        },
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_22"
+        },
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_23"
+        }
+      ]
+    },
+    {
+      "when": {
+        "stack": "3|4"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_30"
+        },
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_31"
+        }
+      ]
+    },
+    {
+      "when": {
+        "stack": "4"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_40"
+        },
+        {
+          "model":"backrooms:block/shelf/item/can/carrot/_41"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 16],
+	"textures": {
+		"0": "backrooms:block/wooden_table",
+		"particle": "backrooms:block/wooden_table"
+	},
+	"elements": [
+		{
+			"name": "root",
+			"from": [4, 0, 4],
+			"to": [12, 1, 12],
+			"faces": {
+				"north": {"uv": [14, 4, 14.5, 12], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [10, 3, 14, 4], "texture": "#0"},
+				"south": {"uv": [9.5, 4, 10, 12], "rotation": 270, "texture": "#0"},
+				"west": {"uv": [10, 12, 14, 13], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [10, 4, 14, 12], "texture": "#0"},
+				"down": {"uv": [10, 4, 14, 12], "texture": "#0"}
+			}
+		},
+		{
+			"name": "leg",
+			"from": [6, 1, 6],
+			"to": [10, 14, 10],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 13], "texture": "#0"},
+				"east": {"uv": [6, 0, 8, 13], "texture": "#0"},
+				"south": {"uv": [4, 0, 6, 13], "texture": "#0"},
+				"west": {"uv": [2, 0, 4, 13], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 13], "texture": "#missing"},
+				"down": {"uv": [0, 0, 2, 13], "texture": "#missing"}
+			}
+		}
+	]
+}

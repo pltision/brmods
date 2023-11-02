@@ -1,0 +1,169 @@
+{
+    "multipart": [
+        {
+            "apply": {
+                "model":"backrooms:block/wooden_table/plane"
+            }
+        },
+        {
+            "when": {
+                "north": "true"
+            },
+            "apply": {
+                "model":"backrooms:block/wooden_table/north"
+            }
+        },
+        {
+            "when": {
+                "south": "true"
+            },
+            "apply": {
+                "model":"backrooms:block/wooden_table/south"
+            }
+        },
+        {
+            "when": {
+                "west": "true"
+            },
+            "apply": {
+                "model":"backrooms:block/wooden_table/west"
+            }
+        },
+        {
+            "when": {
+                "east": "true"
+            },
+            "apply": {
+                "model":"backrooms:block/wooden_table/east"
+            }
+        },
+
+
+        {
+            "when": {
+                "north": "true",
+                "east": "true"
+            },
+            "apply": [
+                {
+                    "model":"backrooms:block/wooden_table/leg"
+                }
+            ]
+        },
+        {
+            "when": {
+                "north": "true",
+                "west": "true"
+            },
+            "apply": [
+                {
+                    "model":"backrooms:block/wooden_table/leg"
+                }
+            ]
+        },
+        {
+            "when": {
+                "south": "true",
+                "east": "true"
+            },
+            "apply": [
+                {
+                    "model":"backrooms:block/wooden_table/leg"
+                }
+            ]
+        },
+        {
+            "when": {
+                "south": "true",
+                "west": "true"
+            },
+            "apply": [
+                {
+                    "model":"backrooms:block/wooden_table/leg"
+                }
+            ]
+        },
+        {
+            "when": {
+                "north": "true",
+                "east": "true"
+            },
+            "apply": [
+                {
+                    "model":"backrooms:block/wooden_table/ne"
+                }
+            ]
+        },
+        {
+            "when": {
+                "north": "true",
+                "west": "true"
+            },
+            "apply": [
+                {
+                    "model":"backrooms:block/wooden_table/nw"
+                }
+            ]
+        },
+        {
+            "when": {
+                "south": "true",
+                "east": "true"
+            },
+            "apply": [
+                {
+                    "model":"backrooms:block/wooden_table/se"
+                }
+            ]
+        },
+        {
+            "when": {
+                "south": "true",
+                "west": "true"
+            },
+            "apply": [
+                {
+                    "model":"backrooms:block/wooden_table/sw"
+                }
+            ]
+        },
+
+
+        {
+            "when": {
+                "north": "true",
+                "east_corner": "true"
+            },
+            "apply": {
+                "model":"backrooms:block/wooden_table/sw"
+            }
+        },
+        {
+            "when": {
+                "north": "true",
+                "west_corner": "true"
+            },
+            "apply": {
+                "model":"backrooms:block/wooden_table/se"
+            }
+        },
+        {
+            "when": {
+                "south": "true",
+                "east_corner": "true"
+            },
+            "apply": {
+                "model":"backrooms:block/wooden_table/nw"
+            }
+        },
+        {
+            "when": {
+                "south": "true",
+                "west_corner": "true"
+            },
+            "apply": {
+                "model":"backrooms:block/wooden_table/ne"
+            }
+        }
+    ]
+}

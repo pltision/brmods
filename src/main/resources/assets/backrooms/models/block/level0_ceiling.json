@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "backrooms:block/level0_bricks",
+    "bottom": "backrooms:block/level0_ceiling",
+    "side": "backrooms:block/level0_bricks"
+  }
+}

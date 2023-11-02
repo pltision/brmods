@@ -1,0 +1,11 @@
+{
+  "block.backrooms.level0_wall": "墙壁",
+  "block.backrooms.level0_bricks": "砖",
+  "block.backrooms.level0_ceiling": "天花板",
+  "block.backrooms.level0_floor": "地毯",
+  "block.backrooms.level0_light": "灯",
+  "block.backrooms.level0.mycelium": "菌丝",
+  "item.backrooms.loot_items.canned_carrots": "胡萝卜罐头",
+  "block.backrooms.shelf.wooden": "架子",
+  "block.backrooms.shelf.wooden.item.canned_carrots": "带有胡萝卜罐头的架子"
+}

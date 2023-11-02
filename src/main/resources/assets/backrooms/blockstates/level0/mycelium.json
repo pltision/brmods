@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "type=red_mushroom": {
+      "model": "backrooms:block/level0/mycelium/red"
+    },
+    "type=brown_mushroom": {
+      "model": "backrooms:block/level0/mycelium/brown"
+    }
+  }
+}

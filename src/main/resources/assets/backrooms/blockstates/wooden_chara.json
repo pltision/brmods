@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "backrooms:block/wooden_chara"
+    },
+    "facing=south": {
+      "model": "backrooms:block/wooden_chara",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "backrooms:block/wooden_chara",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "backrooms:block/wooden_chara",
+      "y": 270
+    }
+  }
+}
