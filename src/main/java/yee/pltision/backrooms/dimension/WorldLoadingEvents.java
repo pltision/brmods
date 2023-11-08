@@ -14,9 +14,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import yee.pltision.Util;
-import yee.pltision.backrooms.dimension.feature.level0.Level0Feature;
-import yee.pltision.backrooms.dimension.feature.level0.Level0LightFeature;
-import yee.pltision.backrooms.dimension.feature.level0.Level0MushroomFeature;
+import yee.pltision.backrooms.dimension.feature.TestFeature;
+import yee.pltision.backrooms.dimension.feature.level0.*;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -39,17 +38,32 @@ public class WorldLoadingEvents {
             decoration= GenerationStep.Decoration.UNDERGROUND_STRUCTURES;
         }
     }
-    public static final ArrayList<FeatureGenerationData> FEATURE_GENERATION_DATA=new ArrayList<>(2);
+    public static final ArrayList<FeatureGenerationData> FEATURE_GENERATION_DATA=new ArrayList<>(4);
     public static final DeferredRegister<Feature<?>> REGISTER=DeferredRegister.create(ForgeRegistries.FEATURES,Util.MODID);
     public static final RegistryObject<Feature<?>> LEVEL0_FEATURE=registry("level0_feature",Level0Feature::feature,
-            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level0")),Level0Feature::placedFeature)
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level0/main")),Level0Feature::placedFeature)
     );
     public static final RegistryObject<Feature<?>> LEVEL0_LIGHT_FEATURE=registry("level0_light", Level0LightFeature::feature,
-            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level0")),Level0LightFeature::placedFeature)
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level0/main")),Level0LightFeature::placedFeature)
     );
     public static final RegistryObject<Feature<?>> LEVEL0_MUSHROOM=registry("level0_mushroom", Level0MushroomFeature::feature,
-            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level0")), Level0MushroomFeature::placedFeature)
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level0/main")), Level0MushroomFeature::placedFeature)
     );
+
+    public static final RegistryObject<Feature<?>> LEVEL0_X_CORRIDOR_FEATURE=registry("level0_x_corridor", XCorridorFeature::feature,
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level0/x_corridor")),GenerationStep.Decoration.UNDERGROUND_DECORATION,XCorridorFeature::placedFeature)
+    );
+    public static final RegistryObject<Feature<?>> LEVEL0_Z_CORRIDOR_FEATURE=registry("level0_z_corridor",ZCorridorFeature::feature,
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level0/z_corridor")),GenerationStep.Decoration.UNDERGROUND_DECORATION,ZCorridorFeature::placedFeature)
+    );
+    public static final RegistryObject<Feature<?>> LEVEL0_C_CORRIDOR_FEATURE=registry("level0_c_corridor", CCorridorFeature::feature,
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level0/c_corridor")),GenerationStep.Decoration.UNDERGROUND_DECORATION,CCorridorFeature::placedFeature)
+    );
+
+    public static final RegistryObject<Feature<?>> FUNCTION_TEST=registry("test_feature", TestFeature::feature,
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:test")), TestFeature::placedFeature)
+    );
+
 
     public static RegistryObject<Feature<?>> registry(String id, Supplier<? extends Feature<?>> builder, FeatureGenerationData data){
         //System.out.println("id"+"已被注册");

@@ -5,8 +5,66 @@
         "type": "minecraft:noise",
         "settings": "backrooms:level0",
         "biome_source": {
-            "type": "minecraft:fixed",
-            "biome": "backrooms:level0"
+            "type": "multi_noise",
+            "biomes": [
+                {
+                    "biome": "backrooms:level0/main",
+                    "parameters": {
+                        "temperature": 0,
+                        "humidity": 0,
+                        "continentalness": 0,
+                        "erosion": 0,
+                        "weirdness": 0,
+                        "depth": 0,
+                        "offset": 0
+                    }
+                },
+                {
+                    "biome": "backrooms:level0/x_corridor",
+                    "parameters": {
+                        "temperature": 0,
+                        "humidity": 0,
+                        "continentalness": 0,
+                        "erosion": {
+                            "min": 0.099,
+                            "max": 0.101
+                        },
+                        "weirdness": 0,
+                        "depth": 0,
+                        "offset": 0
+                    }
+                },
+                {
+                    "biome": "backrooms:level0/z_corridor",
+                    "parameters": {
+                        "temperature": 0,
+                        "humidity": 0,
+                        "continentalness": 0,
+                        "erosion": {
+                            "min": 0.109,
+                            "max":0.111
+                        },
+                        "weirdness": 0,
+                        "depth": 0,
+                        "offset": 0
+                    }
+                },
+                {
+                    "biome": "backrooms:level0/c_corridor",
+                    "parameters": {
+                        "temperature": 0,
+                        "humidity": 0,
+                        "continentalness": 0,
+                        "erosion": {
+                            "min": 0.119,
+                            "max": 0.121
+                        },
+                        "weirdness": 0,
+                        "depth": 0,
+                        "offset": 0
+                    }
+                }
+            ]
         }
     }
 }

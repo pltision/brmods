@@ -1,9 +1,12 @@
 package yee.pltision.mushroom.data;
 
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 import yee.pltision.Util;
+import yee.pltision.mushroom.mc.MushroomMobEffects;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -16,7 +19,7 @@ public class EntityMushroomData implements Serializable {
     public double dry=0.1;
     public final double defaultTemplate=36.5;
     public double temperature=defaultTemplate;
-    final public double immunity=0.2/100;
+    final public double immunity=0.0035;
     public double toxin=0;
     int sleep;
 
@@ -25,7 +28,7 @@ public class EntityMushroomData implements Serializable {
         effects=new HashMap<>();
     }
 
-    public void tick(@Nullable Entity entity){
+    public void tick(@Nullable LivingEntity entity){
         if(sleep>0)
         {
             sleep--;
@@ -36,7 +39,7 @@ public class EntityMushroomData implements Serializable {
             if(toxin>0){
                 toxin-=0.02;
                 toxin*=0.90;
-                temperature+=toxin*0.04;
+                temperature+=toxin*0.02;
                 //temperature-=0.01;
             }
             temperature-=(temperature-defaultTemplate)*0.01;
@@ -45,9 +48,23 @@ public class EntityMushroomData implements Serializable {
             effects.values().removeIf(effect -> effect.tick(this, entity));
         }
 
+        if(entity!=null){
+            entityAction(entity);
+        }
     }
+
+    //对实体操作
+    public void entityAction(LivingEntity entity){
+        if(toxin>4) entity.addEffect(new MobEffectInstance(MushroomMobEffects.MUSHROOM_POTION.get(),200,5,false,true,false));
+        else if(toxin>3) entity.addEffect(new MobEffectInstance(MushroomMobEffects.MUSHROOM_POTION.get(),200,4,false,true,false));
+        else if(toxin>2.5) entity.addEffect(new MobEffectInstance(MushroomMobEffects.MUSHROOM_POTION.get(),200,3,false,true,false));
+        else if(toxin>2) entity.addEffect(new MobEffectInstance(MushroomMobEffects.MUSHROOM_POTION.get(),200,2,false,true,false));
+        else if(toxin>1.5) entity.addEffect(new MobEffectInstance(MushroomMobEffects.MUSHROOM_POTION.get(),200,1,false,true,false));
+        else if(toxin>1) entity.addEffect(new MobEffectInstance(MushroomMobEffects.MUSHROOM_POTION.get(),200,0,false,true,false));
+    }
+
     public double damage(){
-        return Math.max(0,(immunity-toxin*(0.08/100))/100);
+        return Math.max(0,(immunity-toxin*(0.02/100))/100);
     }
 
     public double getSum(){
@@ -55,6 +72,7 @@ public class EntityMushroomData implements Serializable {
             double sum = 0;
         };
         effects.forEach((key,value)-> ref.sum +=Math.max(value.value,0));
+        //System.out.println(ref.sum);
         return ref.sum;
     }
 

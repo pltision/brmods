@@ -1,6 +1,7 @@
 package yee.pltision.mushroom.capability;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtIo;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +14,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import yee.pltision.Util;
 import yee.pltision.mushroom.data.EntityMushroomData;
-import yee.pltision.mushroom.visual.PlayerVisual;
 
 import java.io.*;
 import java.net.DatagramPacket;
@@ -47,7 +47,7 @@ public class MushroomEffectCapability {
 
         @Override
         public void deserializeNBT(CompoundTag nbt) {
-            EntityMushroomDataGetter.getEntityDataFromNbt(data,nbt);
+            EntityMushroomDataGetter.deserializeNBT(data,nbt);
         }
 
         public CEntityMushroomDataGetter(){
@@ -70,8 +70,9 @@ public class MushroomEffectCapability {
             ByteArrayOutputStream bos=new ByteArrayOutputStream(1024*2);
             try {
                 new ObjectOutputStream(bos).writeObject(data);
+                //System.out.println(data);
                 byte[] out=bos.toByteArray();
-                DatagramPacket packet=new DatagramPacket(out,0,out.length,Util.LOCATE_HOST,Util.MUSHROOM_DEBUG_DEBUGGER_PORT);
+                DatagramPacket packet=new DatagramPacket(out,0,out.length,InetAddress.getByName("127.0.0.1"),Util.MUSHROOM_DEBUG_DEBUGGER_PORT);
                 DatagramSocket socket=new DatagramSocket();
                 socket.send(packet);
                 socket.close();
@@ -85,10 +86,9 @@ public class MushroomEffectCapability {
                 try {
                     byte[] buf=new byte[1024*2];
                     DatagramPacket packet=new DatagramPacket(buf,buf.length);
-                    InetAddress address=null;
+                    InetAddress address=InetAddress.getByName("127.0.0.1");
 
-                    address=Util.LOCATE_HOST;
-                    DatagramSocket socket=new DatagramSocket(Util.MUSHROOM_DEBUG_SERVER_PORT, Util.LOCATE_HOST);
+                    DatagramSocket socket=new DatagramSocket(Util.MUSHROOM_DEBUG_SERVER_PORT, address);
 
                     while (true){
                         socket.receive(packet);
@@ -116,7 +116,7 @@ public class MushroomEffectCapability {
                 try {
                     new ObjectOutputStream(bos).writeObject(action);
                     byte[] out=bos.toByteArray();
-                    DatagramPacket packet=new DatagramPacket(out,0,out.length,Util.LOCATE_HOST,Util.MUSHROOM_DEBUG_SERVER_PORT);
+                    DatagramPacket packet=new DatagramPacket(out,0,out.length,InetAddress.getByName("127.0.0.1"),Util.MUSHROOM_DEBUG_SERVER_PORT);
                     DatagramSocket socket=new DatagramSocket();
                     socket.send(packet);
                     socket.close();
@@ -159,6 +159,41 @@ public class MushroomEffectCapability {
                 });
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void save(PlayerEvent.SaveToFile event){
+        File save=new File(event.getPlayerDirectory().getPath()+"/mushroom_data.dat");
+        event.getPlayer().getCapability(CAPABILITY).ifPresent(cap->{
+            try {
+                NbtIo.write(cap.serializeNBT(),save);
+            } catch (IOException e) {
+                Util.LOGGER.error(
+                        "MushroomEffect: Cannot save player mushroom effect data to file:\n" + e
+                );
+            }
+        });
+    }
+
+    @SubscribeEvent
+    public static void load(PlayerEvent.LoadFromFile event){
+        File save=new File(event.getPlayerDirectory().getPath()+"/mushroom_data.dat");
+        event.getPlayer().getCapability(CAPABILITY).ifPresent(cap->{
+            if(save.isFile()){
+                try {
+                    cap.deserializeNBT(NbtIo.read(save));
+                } catch (IOException e) {
+                    Util.LOGGER.warn(
+                            "MushroomEffect: Cannot read player mushroom effect data in file:\n" + e
+                    );
+                }
+            }
+            else{
+                Util.LOGGER.info(
+                        "MushroomEffect: Cannot found player mushroom effect data in "+save.getPath()+" . Maybe it never been created, or it been deleted."
+                );
+            }
+        });
     }
 
 

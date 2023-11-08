@@ -4,17 +4,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.Dynamic;
-import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.world.level.levelgen.DensityFunction;
+import net.minecraft.world.level.levelgen.*;
+import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,6 +21,7 @@ import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yee.pltision.Util;
+import yee.pltision.backrooms.dimension.densityfunctioncontext.AbsoluteYFunctionContext;
 import yee.pltision.backrooms.dimension.densityfunctioncontext.DeviationableFunctionContext;
 import yee.pltision.rectraft.GeneratorTest;
 import yee.pltision.rectraft.RectRaft;
@@ -41,6 +41,7 @@ public class BackroomsFunction {
     Codec<Double> NOISE_VALUE_CODEC = Codec.doubleRange(-1000000.0D, 1000000.0D);
 
     public static final int BASE_HEIGHT=49;
+    public static final int LEVEL1_HEIGHT=6;
 
     public BackroomsFunction() throws IOException {
     }
@@ -166,6 +167,280 @@ public class BackroomsFunction {
             return CODEC;
         }
     }
+
+    public record Level0ErosionFunction(DensityFunction noise) implements DensityFunction.SimpleFunction{
+
+        public static final Codec<TestFunction> CODEC= DensityFunctions.DIRECT_CODEC.fieldOf("noise").xmap(TestFunction::new, TestFunction::noise).codec();
+
+        @Override
+        public double compute(@NotNull FunctionContext c) {
+
+            int x=(c.blockX()&0xfffffff0)>>2,z=(c.blockZ()&0xfffffff0)>>2;
+            AbsoluteYFunctionContext context=new AbsoluteYFunctionContext(x,BASE_HEIGHT,z);
+
+            int xSum=1,zSum=1;
+            final int xMod,zMod;
+
+
+            if (noise.compute(context) < -1) {
+                //计算xz轴正负范围
+                {
+                    for (int i = 0; i < 100; i++) {
+                        context.dx += 4;
+                        if (noise.compute(context) > -1) {
+                            break;
+                        }
+                        xSum++;
+                    }
+                    context.dx = 0;
+                    for (int i = 0; i < 100; i++) {
+                        context.dx -= 4;
+                        if (noise.compute(context) > -1) {
+                            break;
+                        }
+                        xSum++;
+                    }
+                    context.dx = 0;
+                    for (int i = 0; i < 100; i++) {
+                        context.dz += 4;
+                        if (noise.compute(context) > -1) {
+                            break;
+                        }
+                        zSum++;
+                    }
+                    context.dz = 0;
+                    for (int i = 0; i < 100; i++) {
+                        context.dz -= 4;
+                        if (noise.compute(context) > -1) {
+                            break;
+                        }
+                        zSum++;
+                    }
+                    context.dz = 0;
+                }
+                xMod=0b111;
+                zMod=0b1111;
+            }
+            else if(noise.compute(context) > 1){
+                {
+                    for (int i = 0; i < 100; i++) {
+                        context.dx += 4;
+                        if (noise.compute(context) < 1) {
+                            break;
+                        }
+                        xSum++;
+                    }
+                    context.dx = 0;
+                    for (int i = 0; i < 100; i++) {
+                        context.dx -= 4;
+                        if (noise.compute(context) < 1) {
+                            break;
+                        }
+                        xSum++;
+                    }
+                    context.dx = 0;
+                    for (int i = 0; i < 100; i++) {
+                        context.dz += 4;
+                        if (noise.compute(context) < 1) {
+                            break;
+                        }
+                        zSum++;
+                    }
+                    context.dz = 0;
+                    for (int i = 0; i < 100; i++) {
+                        context.dz -= 4;
+                        if (noise.compute(context) < 1) {
+                            break;
+                        }
+                        zSum++;
+                    }
+                    context.dz = 0;
+                }
+                xMod=0b1111;
+                zMod=0b111;
+            }
+            else return 0;
+
+            //if((x&0b11000)==0) return 0.11;
+
+            if((z&0b11100)==0&&(xSum&xMod)==0){
+                //if(((xSum^92136)&0b1111111)==0) return 0.20;
+                if((x&0b11100)==0&&(zSum&zMod)==0) return 0.12;
+                if((c.blockZ()&0b1111)>=8) return 0;
+                return 0.10;
+            }
+            if((x&0b11100)==0&&(zSum&zMod)==0){
+                //if(((zSum^145436)&0b1111111)==0) return 0.21;
+                if((c.blockX()&0b1111)>=8) return 0;
+                return 0.11;
+            }
+
+            return 0;
+        }
+
+        @Override
+        public double minValue() {
+            return 0;
+        }
+
+        @Override
+        public double maxValue() {
+            return 2;
+        }
+
+        @Override
+        public @NotNull Codec<? extends DensityFunction> codec() {
+            return CODEC;
+        }
+    }
+
+    public static NormalNoise seedNoise(PositionalRandomFactory p_209525_, Registry<NormalNoise.NoiseParameters> p_209526_, Holder<NormalNoise.NoiseParameters> p_209527_) {
+        return Noises.instantiate(p_209525_, p_209527_.unwrapKey().flatMap(p_209526_::getHolder).orElse(p_209527_));
+    }
+
+    public record Noise(Holder<NormalNoise.NoiseParameters> noiseData, @javax.annotation.Nullable NormalNoise noise, double xzScale, double yScale) implements DensityFunction.SimpleFunction {
+        public static final MapCodec<Noise> DATA_CODEC = RecordCodecBuilder.mapCodec((p_208798_) -> {
+            return p_208798_.group(NormalNoise.NoiseParameters.CODEC.fieldOf("noise").forGetter(Noise::noiseData), Codec.DOUBLE.fieldOf("xz_scale").forGetter(Noise::xzScale), Codec.DOUBLE.fieldOf("y_scale").forGetter(Noise::yScale)).apply(p_208798_, Noise::createUnseeded);
+        });
+        public static final Codec<Noise> CODEC = DATA_CODEC.codec();
+
+        public static Noise createUnseeded(Holder<NormalNoise.NoiseParameters> p_208802_, @Deprecated double p_208803_, double p_208804_) {
+            return new Noise(p_208802_, NormalNoise.create(new LegacyRandomSource(seed),p_208802_.value()) , p_208803_, p_208804_);
+        }
+
+        public double compute(DensityFunction.FunctionContext p_208800_) {
+            return this.noise == null ? 0.0D : this.noise.getValue((double)p_208800_.blockX() * this.xzScale, (double)p_208800_.blockY() * this.yScale, (double)p_208800_.blockZ() * this.xzScale);
+        }
+
+        public double minValue() {
+            return -this.maxValue();
+        }
+
+        public double maxValue() {
+            return this.noise == null ? 2.0D : this.noise.maxValue();
+        }
+
+        public @NotNull Codec<? extends DensityFunction> codec() {
+            return CODEC;
+        }
+    }
+
+    public record TestFunction(DensityFunction noise) implements DensityFunction.SimpleFunction {
+
+        public static final Codec<TestFunction> CODEC = DensityFunctions.DIRECT_CODEC.fieldOf("noise").xmap(TestFunction::new, TestFunction::noise).codec();
+
+        @Override
+        public double compute(@NotNull FunctionContext p_208223_) {
+            return noise.compute(p_208223_);
+        }
+
+        @Override
+        public double minValue() {
+            return -100;
+        }
+
+        @Override
+        public double maxValue() {
+            return 100;
+        }
+
+        @Override
+        public @NotNull Codec<? extends DensityFunction> codec() {
+            return CODEC;
+        }
+    }
+
+    public record ConstantBlockAverageFunction(DensityFunction argument)implements DensityFunction.SimpleFunction{
+        public static final Codec<ConstantBlockAverageFunction> CODEC = DensityFunctions.DIRECT_CODEC.fieldOf("argument").xmap(ConstantBlockAverageFunction::new, ConstantBlockAverageFunction::argument).codec();
+
+        @Override
+        public double compute(@NotNull FunctionContext c) {
+            int x=c.blockX()&0xFFFFFFFC,z=c.blockZ()&0xFFFFFFFC;
+
+            AbsoluteYFunctionContext context=new AbsoluteYFunctionContext(x,BASE_HEIGHT,z);
+
+            double average=0;
+
+            context.dx=0;
+            for(int i=0;i<4;i++){
+                context.dz=0;
+                for(int j=0;j<4;j++){
+                    average+= argument().compute(context);
+                    context.dz++;
+                }
+                context.dx++;
+            }
+
+            return average/16;
+        }
+
+        @Override
+        public double minValue() {
+            return argument.minValue();
+        }
+
+        @Override
+        public double maxValue() {
+            return argument.maxValue();
+        }
+
+        @Override
+        public @NotNull Codec<? extends DensityFunction> codec() {
+            return CODEC;
+        }
+    }
+
+    public record SquareFunction(DensityFunction noise)implements DensityFunction.SimpleFunction{
+        public static final Codec<SquareFunction> CODEC = DensityFunctions.DIRECT_CODEC.fieldOf("noise").xmap(SquareFunction::new, SquareFunction::noise).codec();
+
+        @Override
+        public double compute(@NotNull FunctionContext c) {
+            return noise.compute(new DeviationableFunctionContext(c.blockX(),c.blockY(),0))>0 &&
+                    noise.compute(new DeviationableFunctionContext(0,c.blockY(),c.blockZ()))>0
+                    ?0:1;
+        }
+
+        @Override
+        public double minValue() {
+            return 0;
+        }
+
+        @Override
+        public double maxValue() {
+            return 1;
+        }
+
+        @Override
+        public @NotNull Codec<? extends DensityFunction> codec() {
+            return CODEC;
+        }
+    }
+
+    public record Level1BlockFunction(DensityFunction noise)implements DensityFunction.SimpleFunction{
+        public static final Codec<Level1BlockFunction> CODEC = DensityFunctions.DIRECT_CODEC.fieldOf("noise").xmap(Level1BlockFunction::new, Level1BlockFunction::noise).codec();
+
+        @Override
+        public double compute(@NotNull FunctionContext c) {
+            if(c.blockY()<BASE_HEIGHT||c.blockY()>BASE_HEIGHT+LEVEL1_HEIGHT)return 1;
+            return noise.compute(c);
+        }
+
+        @Override
+        public double minValue() {
+            return 0;
+        }
+
+        @Override
+        public double maxValue() {
+            return 1;
+        }
+
+        @Override
+        public @NotNull Codec<? extends DensityFunction> codec() {
+            return CODEC;
+        }
+    }
+
 
     public interface TypeComputer{
         void next(double type);
@@ -351,11 +626,16 @@ public class BackroomsFunction {
     @Nullable
     public static DensityFunction LEVEL0_GRAPH;
     public static DensityFunction LEVEL0_TYPE_NOISE;
+    public static DensityFunction TEST_NOISE;
+    public static DensityFunction LEVEL0_CORRIDOR_NOISE;
+
+    public static long seed;
 
 
     @SubscribeEvent
     public static void worldLoading(ServerAboutToStartEvent event){
         //System.out.println("worldLoading被执行");
+        seed= event.getServer().getWorldData().worldGenSettings().seed();
         MinecraftServer server=event.getServer();
         if(server==null) return;
         ResourceManager manager= server.getServerResources().resourceManager();
@@ -365,11 +645,18 @@ public class BackroomsFunction {
             //event.getWorld().getServer().getServerResources()
             LEVEL0_GRAPH=readFunction(manager,new ResourceLocation(Util.MODID,"worldgen/density_function/level0_graph_function.json"));
             LEVEL0_TYPE_NOISE=readFunction(manager,new ResourceLocation(Util.MODID,"worldgen/density_function/level0_type_noise.json"));
+            TEST_NOISE=readFunction(manager,new ResourceLocation(Util.MODID,
+                    "worldgen/density_function/test_noise.json"));
+            System.out.println("TEST_NOISE: "+TEST_NOISE);
+            LEVEL0_CORRIDOR_NOISE=readFunction(manager,new ResourceLocation(Util.MODID,
+                    "worldgen/density_function/level0_corridor.json"));
+
 
         } catch (IOException|ClassCastException e) {
             e.printStackTrace();
         }
 
+        //new DensityFunctions.Noise(null,null,null,null);
         //loadBmps(manager);
 
         new ResourceLocation(Util.MODID,"level0");
@@ -409,6 +696,12 @@ public class BackroomsFunction {
     public static void reg(){
         register(Registry.DENSITY_FUNCTION_TYPES,"level0_graph", Level0GraphFunction.CODEC);
         register(Registry.DENSITY_FUNCTION_TYPES,"level0_block", Level0BlockFunction.CODEC);
+        register(Registry.DENSITY_FUNCTION_TYPES,"level0_corridor", Level0ErosionFunction.CODEC);
+        register(Registry.DENSITY_FUNCTION_TYPES,"test", TestFunction.CODEC);
+        register(Registry.DENSITY_FUNCTION_TYPES,"p_noise", Noise.CODEC);
+        register(Registry.DENSITY_FUNCTION_TYPES,"constant_average_block", ConstantBlockAverageFunction.CODEC);
+        register(Registry.DENSITY_FUNCTION_TYPES,"square_ground", SquareFunction.CODEC);
+
 
         ResourceKey<DensityFunction> level0FunctionKey=ResourceKey.create(
                 Registry.DENSITY_FUNCTION_REGISTRY,

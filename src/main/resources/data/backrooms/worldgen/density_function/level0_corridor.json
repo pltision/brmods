@@ -1,0 +1,17 @@
+{
+  "type": "level0_corridor",
+  "noise": {
+    "type": "p_noise",
+    "noise": {
+      "firstOctave": -6,
+      "amplitudes": [
+        3.5,
+        1
+      ]
+    },
+    "xz_scale": 0.75,
+    "y_scale": 0.5
+  }
+
+}
+

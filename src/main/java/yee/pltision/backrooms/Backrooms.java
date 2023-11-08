@@ -26,6 +26,7 @@ import yee.pltision.backrooms.dimension.WorldLoadingEvents;
 import yee.pltision.backrooms.dimension.feature.level0.Level0Feature;
 import yee.pltision.mushroom.capability.EntityMushroomDataGetter;
 import yee.pltision.mushroom.capability.MushroomEffectCapability;
+import yee.pltision.mushroom.mc.MushroomMobEffects;
 
 import java.util.stream.Collectors;
 
@@ -53,6 +54,7 @@ public class Backrooms
         bus.addListener(Level0Feature::inti);
 
         MushroomEffectCapability.DebugHelper.setupListener();
+
 //        bus.addListener(MushroomEffectCapability::registerCapability);
 //        bus.addListener(MushroomEffectCapability::onPlayerCloned);
 //        bus.addListener(MushroomEffectCapability::onAttachCapabilityEvent);
@@ -70,6 +72,8 @@ public class Backrooms
         BrBlocks.REGISTER.register(bus);
         BrBlocks.ITEM_REGISTER.register(bus);
         BrBlocks.BLOCK_ENTITY_REGISTER.register(bus);
+
+        MushroomMobEffects.REGISTER.register(bus);
 
         //Mushrooms.inti();
 

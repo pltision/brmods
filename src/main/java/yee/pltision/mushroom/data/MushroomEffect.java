@@ -28,7 +28,7 @@ public class MushroomEffect implements BarBlock, Serializable {
     public boolean tick(EntityMushroomData entityData,@Nullable Entity entity){
 
         if(value<=0) return true;
-        defaultGroup(entityData,0.4,0.5+deep,0.5,1,37,32,0.05);
+        defaultGroup(entityData,0.4,0.5+deep,0.5,1,36,16,1);
         if(deep<10&&deep>-10) deep+=(0.75+(value-deep)/value)*Math.min(value*0.01,0.01);
         deep-=entityData.damage()*0.01;
         return false;
@@ -43,8 +43,10 @@ public class MushroomEffect implements BarBlock, Serializable {
         double sum=player.getSum();
         double centered=value-centerValue*(1.5-sum);
         double valueBuff = centered>0 ? centered*pValueBuff : -centered*nValueBuff ;
-        value=Math.min(1-sum+value,value+(2-sum*2)*context.group*(1+valueBuff)*(1+deep*deepMul)*context.groupMul)*
-                ( (player.temperature>tpStart ? (tpRange-(player.temperature-tpStart))/tpRange : 1) *tpMul+(1-tpMul));
+        value=Math.min(1-sum+value,value+ (2-sum*2)*context.group*(1+valueBuff)*(1+deep*deepMul)*context.groupMul*
+                ( (player.temperature>tpStart ? (tpRange-(player.temperature-tpStart))/tpRange : 1) *tpMul+(1-tpMul))
+        );
+        //System.out.println(( (player.temperature>tpStart ? (tpRange-(player.temperature-tpStart))/tpRange : 1) *tpMul+(1-tpMul)));
         player.toxin+=value* context.toxin*context.toxinMul;
         value-=player.damage()*context.damageMul;
 

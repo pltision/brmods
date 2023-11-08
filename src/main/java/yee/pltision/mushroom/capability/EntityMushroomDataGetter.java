@@ -44,7 +44,7 @@ public interface EntityMushroomDataGetter extends INBTSerializable<CompoundTag> 
 
     void deserializeNBT(CompoundTag nbt);
 
-    static void getEntityDataFromNbt(EntityMushroomData data,CompoundTag nbt){
+    static void deserializeNBT(EntityMushroomData data, CompoundTag nbt){
         //EntityMushroomData data=new EntityMushroomData();
         data.dry=nbt.getDouble("dry");
         data.temperature=nbt.getDouble("temperature");

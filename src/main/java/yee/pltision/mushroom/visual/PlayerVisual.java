@@ -43,9 +43,6 @@ public class PlayerVisual extends Thread{
         Frame frame=new Frame();
         frame.setBounds(100,100,1000,500);
 
-        System.out.println(LinkedList.class.hashCode());
-        System.out.println(Queue.class.hashCode());
-
         //1010110
 
         Random random =new Random(11243);
@@ -103,10 +100,7 @@ public class PlayerVisual extends Thread{
                 }
                 long finalType = type;
                 double finalValue = value;
-                sendAction(player -> {
-                    if(player==null) return;
-                    player.addEffect(finalType, finalValue);
-                });
+                sendAction(player -> player.addEffect(finalType, finalValue));
             }
         });
         Button randomButton=new Button("Random");
@@ -124,10 +118,7 @@ public class PlayerVisual extends Thread{
                     }
 
                     double finalValue = value;
-                    sendAction(player -> {
-                        if(player==null) return;
-                        player.addEffect(random.nextLong(), finalValue);
-                    });
+                    sendAction(player -> player.addEffect(random.nextLong(), finalValue));
                 }
                 else{
                     effectType.setText(VisualFrame.toFullBinaryString(random.nextLong()).toString());
@@ -140,13 +131,9 @@ public class PlayerVisual extends Thread{
             //final EntityMushroomData finalData= data;
             @Override
             public void mouseClicked(MouseEvent e) {
-                sendAction(player -> {
-                    if(e.getButton()==MouseEvent.BUTTON2) {
-                        if(player==null) return;
-                        player.effects.clear();
-                    }
-
-                });
+                if(e.getButton()==MouseEvent.BUTTON2) {
+                    sendAction(player -> player.effects.clear());
+                }
             }
         });
         {

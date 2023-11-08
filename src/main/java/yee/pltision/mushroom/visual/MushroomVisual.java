@@ -29,13 +29,14 @@ public class MushroomVisual {
 
         final Action[] action = {null};
 
-//        player.effects.add(new MushroomEffect(0b0111010000000001011010101101010101100000000000000000000000000000L,0.2));
+        player.addEffect(new MushroomEffect(0b0111010000000001011010101101010101100000000000000000000000000000L,0.2));
 //        player.effects.add(new MushroomEffect(0b0111010000000000000000001010110101011010101101010110000000000000L,0.1,0));
 //        player.effects.add(new MushroomEffect(0b0111010000000000000000001010110000000000000000000000101011101101L,0.4,0.4));
 
 //        player.effects.add(new MushroomEffect(0b0111010001010110101011010101101010110101011010101110101100000000L,0.1,0));
 //        player.effects.add(new MushroomEffect(0b0111010001010110000000000000000000000000000000000000000000000000L,0.1,0));
 
+/*        player.addEffect(new MushroomEffect(random.nextLong(),0.01,0));
         player.addEffect(new MushroomEffect(random.nextLong(),0.01,0));
         player.addEffect(new MushroomEffect(random.nextLong(),0.01,0));
         player.addEffect(new MushroomEffect(random.nextLong(),0.01,0));
@@ -43,8 +44,7 @@ public class MushroomVisual {
         player.addEffect(new MushroomEffect(random.nextLong(),0.01,0));
         player.addEffect(new MushroomEffect(random.nextLong(),0.01,0));
         player.addEffect(new MushroomEffect(random.nextLong(),0.01,0));
-        player.addEffect(new MushroomEffect(random.nextLong(),0.01,0));
-        player.addEffect(new MushroomEffect(random.nextLong(),0.01,0));
+        player.addEffect(new MushroomEffect(random.nextLong(),0.01,0));*/
 
         BorderLayout layout=new BorderLayout();
         layout.setHgap(80);
@@ -82,8 +82,8 @@ public class MushroomVisual {
                         action[0] = player->{
                             server=new Server(MushroomVisual.player=new EntityMushroomData());
                             visual.player=MushroomVisual.player;
-                            for(int i=0;i<6;i++)
-                                MushroomVisual.player.addEffect(random.nextLong(),0.01);
+                            for(int i=0;i<4;i++)
+                                MushroomVisual.player.addEffect(random.nextLong(),0.1);
 
                         };
                     }
