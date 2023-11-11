@@ -23,7 +23,6 @@ import org.jetbrains.annotations.Nullable;
 import yee.pltision.Util;
 import yee.pltision.backrooms.dimension.densityfunctioncontext.AbsoluteYFunctionContext;
 import yee.pltision.backrooms.dimension.densityfunctioncontext.DeviationableFunctionContext;
-import yee.pltision.rectraft.GeneratorTest;
 import yee.pltision.rectraft.RectRaft;
 
 import javax.imageio.ImageIO;
@@ -35,12 +34,14 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.function.Function;
 
+@SuppressWarnings("EnhancedSwitchMigration")
 @Mod.EventBusSubscriber(modid = Util.MODID)
 public class BackroomsFunction {
 
     Codec<Double> NOISE_VALUE_CODEC = Codec.doubleRange(-1000000.0D, 1000000.0D);
 
     public static final int BASE_HEIGHT=49;
+    public static final int LEVEL1_TOP=95;
     public static final int LEVEL1_HEIGHT=6;
 
     public BackroomsFunction() throws IOException {
@@ -79,7 +80,7 @@ public class BackroomsFunction {
             };
 
 
-            return GeneratorTest.RAFT[( ( GeneratorTest.RAFT.length + (int)(graph.compute(context)*(GeneratorTest.RAFT.length-3.1415926535)) /*+ ((int)(graph.compute(context)/2)<<2)*/ ) &0xffffff)%GeneratorTest.RAFT.length]
+            return LEVEL0_BMPS[( ( LEVEL0_BMPS.length + (int)(graph.compute(context)*(LEVEL0_BMPS.length-3.1415926535)) /*+ ((int)(graph.compute(context)/2)<<2)*/ ) &0xffffff)% LEVEL0_BMPS.length]
                     .getPoint(c.blockX()&0b11111, c.blockZ()&0b11111, (byte) turn.compute(c))&0xff;
         }
 
@@ -308,7 +309,7 @@ public class BackroomsFunction {
             return new Noise(p_208802_, NormalNoise.create(new LegacyRandomSource(seed),p_208802_.value()) , p_208803_, p_208804_);
         }
 
-        public double compute(DensityFunction.FunctionContext p_208800_) {
+        public double compute(DensityFunction.@NotNull FunctionContext p_208800_) {
             return this.noise == null ? 0.0D : this.noise.getValue((double)p_208800_.blockX() * this.xzScale, (double)p_208800_.blockY() * this.yScale, (double)p_208800_.blockZ() * this.xzScale);
         }
 
@@ -390,24 +391,25 @@ public class BackroomsFunction {
         }
     }
 
-    public record SquareFunction(DensityFunction noise)implements DensityFunction.SimpleFunction{
-        public static final Codec<SquareFunction> CODEC = DensityFunctions.DIRECT_CODEC.fieldOf("noise").xmap(SquareFunction::new, SquareFunction::noise).codec();
+    public record MinSquareFunction(DensityFunction noise)implements DensityFunction.SimpleFunction{
+        public static final Codec<MinSquareFunction> CODEC = DensityFunction.HOLDER_HELPER_CODEC.fieldOf("noise").xmap(MinSquareFunction::new, MinSquareFunction::noise).codec();
 
         @Override
         public double compute(@NotNull FunctionContext c) {
-            return noise.compute(new DeviationableFunctionContext(c.blockX(),c.blockY(),0))>0 &&
-                    noise.compute(new DeviationableFunctionContext(0,c.blockY(),c.blockZ()))>0
-                    ?0:1;
+            return Math.min(
+                    noise.compute(new DeviationableFunctionContext(c.blockX(),c.blockY(),0)),
+                    noise.compute(new DeviationableFunctionContext(0,c.blockY(),c.blockZ()))
+            );
         }
 
         @Override
         public double minValue() {
-            return 0;
+            return noise.minValue();
         }
 
         @Override
         public double maxValue() {
-            return 1;
+            return noise.maxValue();
         }
 
         @Override
@@ -417,12 +419,15 @@ public class BackroomsFunction {
     }
 
     public record Level1BlockFunction(DensityFunction noise)implements DensityFunction.SimpleFunction{
-        public static final Codec<Level1BlockFunction> CODEC = DensityFunctions.DIRECT_CODEC.fieldOf("noise").xmap(Level1BlockFunction::new, Level1BlockFunction::noise).codec();
+        public static final Codec<Level1BlockFunction> CODEC = RecordCodecBuilder.create((p_208359_) ->
+                p_208359_.group(
+                        DensityFunction.HOLDER_HELPER_CODEC.fieldOf("noise").forGetter(Level1BlockFunction::noise)
+                ).apply(p_208359_, Level1BlockFunction::new));
 
         @Override
         public double compute(@NotNull FunctionContext c) {
-            if(c.blockY()<BASE_HEIGHT||c.blockY()>BASE_HEIGHT+LEVEL1_HEIGHT)return 1;
-            return noise.compute(c);
+            if(c.blockY()<=BASE_HEIGHT||c.blockY()>BASE_HEIGHT+LEVEL1_HEIGHT)return 1;
+            return noise.compute(c)>0?1:0;
         }
 
         @Override
@@ -480,7 +485,7 @@ public class BackroomsFunction {
             public final SearchLinker[] neighbor;//右下左上
             public int created;
             public int searched;
-            public int deviation;
+            public final int deviation;
             public SearchLinker(){
                 deviation=-1;//根节点
                 neighbor=new SearchLinker[4];
@@ -647,7 +652,7 @@ public class BackroomsFunction {
             LEVEL0_TYPE_NOISE=readFunction(manager,new ResourceLocation(Util.MODID,"worldgen/density_function/level0_type_noise.json"));
             TEST_NOISE=readFunction(manager,new ResourceLocation(Util.MODID,
                     "worldgen/density_function/test_noise.json"));
-            System.out.println("TEST_NOISE: "+TEST_NOISE);
+            //System.out.println("TEST_NOISE: "+TEST_NOISE);
             LEVEL0_CORRIDOR_NOISE=readFunction(manager,new ResourceLocation(Util.MODID,
                     "worldgen/density_function/level0_corridor.json"));
 
@@ -659,16 +664,18 @@ public class BackroomsFunction {
         //new DensityFunctions.Noise(null,null,null,null);
         //loadBmps(manager);
 
-        new ResourceLocation(Util.MODID,"level0");
+        //new ResourceLocation(Util.MODID,"level0");
     }
+
+    public static RectRaft[] LEVEL0_BMPS;
 
     public static void loadBmps(ResourceManager manager){
         try {
             Scanner scanner = new Scanner(manager.getResource(new ResourceLocation(Util.MODID,"worldgen/levelbpms/level0/length.txt")).getInputStream());
             int length = scanner.nextInt();
-            GeneratorTest.RAFT=new RectRaft[length];
+            LEVEL0_BMPS =new RectRaft[length];
             for (int i = 0; i < length; i++) {
-                GeneratorTest.RAFT[i] = RectRaft.createWithImage(ImageIO.read(manager.getResource(new ResourceLocation(Util.MODID,"worldgen/levelbpms/level0/level0_"+i+".png")).getInputStream()));
+                LEVEL0_BMPS[i] = RectRaft.createWithImage(ImageIO.read(manager.getResource(new ResourceLocation(Util.MODID,"worldgen/levelbpms/level0/level0_"+i+".png")).getInputStream()));
             }
 
         } catch (Exception e) {
@@ -700,7 +707,8 @@ public class BackroomsFunction {
         register(Registry.DENSITY_FUNCTION_TYPES,"test", TestFunction.CODEC);
         register(Registry.DENSITY_FUNCTION_TYPES,"p_noise", Noise.CODEC);
         register(Registry.DENSITY_FUNCTION_TYPES,"constant_average_block", ConstantBlockAverageFunction.CODEC);
-        register(Registry.DENSITY_FUNCTION_TYPES,"square_ground", SquareFunction.CODEC);
+        register(Registry.DENSITY_FUNCTION_TYPES,"min_square", MinSquareFunction.CODEC);
+        register(Registry.DENSITY_FUNCTION_TYPES,"level1_block", Level1BlockFunction.CODEC);
 
 
         ResourceKey<DensityFunction> level0FunctionKey=ResourceKey.create(

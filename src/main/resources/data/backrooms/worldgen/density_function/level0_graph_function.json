@@ -1,27 +1,36 @@
 {
   "type": "level0_graph",
   "graph": {
-    "type": "mul",
-    "argument1": 32,
-    "argument2": {
-      "type": "minecraft:old_blended_noise",
-      "xz_scale": 16,
-      "y_scale": 2,
-      "xz_factor": 5,
-      "y_factor": 0.001,
-      "smear_scale_multiplier": 2
-    }
+    "type": "p_noise",
+    "noise": {
+      "firstOctave": -6,
+      "amplitudes": [
+        4,
+        3
+      ]
+    },
+    "xz_scale": 1,
+    "y_scale": 0
   },
   "turn": {
     "type": "mul",
-    "argument1": 24,
+    "argument1": 1,
     "argument2": {
-      "type": "minecraft:old_blended_noise",
-      "xz_scale": 32,
-      "y_scale": 2,
-      "xz_factor": 16,
-      "y_factor": 0.001,
-      "smear_scale_multiplier": 2
+      "type":"constant_average_block",
+      "argument": {
+        "type": "p_noise",
+        "noise": {
+          "firstOctave": -10,
+          "amplitudes": [
+            17,
+            13,
+            11,
+            2,1,1,1,1
+          ]
+        },
+        "xz_scale": 1,
+        "y_scale": 0
+      }
     }
   }
 }

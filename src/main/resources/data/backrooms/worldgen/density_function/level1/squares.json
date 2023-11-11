@@ -1,16 +1,15 @@
 {
-  "type": "test",
+  "type": "min_square",
   "noise": {
     "type": "p_noise",
     "noise": {
-      "firstOctave": -8,
+      "firstOctave": -6,
       "amplitudes": [
-        6,
+        3.5,
         2
       ]
     },
-    "xz_scale": 0.75,
-    "y_scale": 0.5
+    "xz_scale": 1,
+    "y_scale": 0
   }
-
 }

@@ -9,10 +9,13 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BarrierBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -30,6 +33,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.Util;
 import yee.pltision.backrooms.block.level0.Level0Light;
+import yee.pltision.backrooms.block.level1.generator.Level1GeneratorDataBlock;
 import yee.pltision.backrooms.block.lootblock.EmptyShelfBlock;
 import yee.pltision.backrooms.block.lootblock.StackableShelfBlock;
 import yee.pltision.backrooms.block.mushroom.BrMushroomBlock;
@@ -39,6 +43,7 @@ import yee.pltision.backrooms.block.type.BackroomsHardBlock;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("unused")
 public class BrBlocks {
     public static final DeferredRegister<Block> REGISTER=DeferredRegister.create(ForgeRegistries.BLOCKS, Util.MODID);
     public static final DeferredRegister<Item> ITEM_REGISTER=DeferredRegister.create(ForgeRegistries.ITEMS, Util.MODID);
@@ -95,6 +100,15 @@ public class BrBlocks {
                         new BrMyceliumBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).sound(SoundType.STONE).requiresCorrectToolForDrops().strength(5F, 14.0F))
                 );
     }
+
+    @Mod.EventBusSubscriber
+    public static class Level1{
+        public static final RegistryObject<Block> GENERATOR_DATA_BLOCK= REGISTER.register("level1/generator_data_block",()->
+                    new Level1GeneratorDataBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
+        public static final RegistryObject<Block> GENERATED_BLOCK= REGISTER.register("level1/generated_block",()->
+                new BarrierBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
+    }
+
     public static final RegistryObject<Block> WOODEN_TABLE=
             REGISTER.register("wooden_table",()->
                     new Table(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).sound(SoundType.WOOD).requiresCorrectToolForDrops().strength(3F, 10.0F).noOcclusion())
@@ -180,6 +194,19 @@ public class BrBlocks {
     }
 
     @Mod.EventBusSubscriber
+    public static class Normal{
+        public static final RegistryObject<Block> CONCRETE=REGISTER.register("normal/concrete",()->
+                new BackroomsHardBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.BLACK).requiresCorrectToolForDrops().strength(5F,14F)));
+        public static final RegistryObject<Block> LIGHT_CONCRETE=REGISTER.register("normal/light_concrete",()->
+                new BackroomsHardBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.WHITE).requiresCorrectToolForDrops().strength(5F,14F)));
+        public static final RegistryObject<Item> CONCRETE_ITEM =
+                ITEM_REGISTER.register("normal/concrete",()-> new BlockItem(CONCRETE.get(),new Item.Properties()));
+        public static final RegistryObject<Item> LIGHT_CONCRETE_ITEM =
+                ITEM_REGISTER.register("normal/light_concrete",()-> new BlockItem(LIGHT_CONCRETE.get(),new Item.Properties()));
+
+    }
+
+    @Mod.EventBusSubscriber
     public static class LootItems {
         public static final RegistryObject<Item> CANNED_CARROTS =
                 ITEM_REGISTER.register("loot_items/canned_carrots",()->
@@ -192,8 +219,6 @@ public class BrBlocks {
                         }
                 );
     }
-
-
 
 
 }
