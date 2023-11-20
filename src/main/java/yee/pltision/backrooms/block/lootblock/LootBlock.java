@@ -29,6 +29,7 @@ public class LootBlock extends Block {
     public static LinkedList<BlockSetup> registeredBlocks=new LinkedList<>();
     public static LinkedList<LootBlock> nbtLootBlocks =new LinkedList<>();
 
+    @SuppressWarnings("ConstantConditions")
     public static final RegistryObject<BlockEntityType<LootBlockEntity>> LOOT_BLOCK_ENTITY_TYPE =
             BrBlocks.BLOCK_ENTITY_REGISTER.register("item_block_blockentity", () -> BlockEntityType.Builder.of( LootBlockEntity::new, getBlockArray(nbtLootBlocks) ).build(null));
 
@@ -65,7 +66,8 @@ public class LootBlock extends Block {
         return super.use(state,level,pos,player,hand,result);
     }*/
 
-    public record BlockSetup(LootBlock block,Supplier<BlockState> replace){
+    public record
+    BlockSetup(LootBlock block,Supplier<BlockState> replace){
         public void inti(){
             block.replace=replace.get();
             //block.loot=loot.get();

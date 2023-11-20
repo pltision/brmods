@@ -1,15 +1,4 @@
 {
   "type": "min_square",
-  "noise": {
-    "type": "p_noise",
-    "noise": {
-      "firstOctave": -6,
-      "amplitudes": [
-        3.5,
-        2
-      ]
-    },
-    "xz_scale": 1,
-    "y_scale": 0
-  }
+  "noise": "backrooms:level1/squares_noise"
 }

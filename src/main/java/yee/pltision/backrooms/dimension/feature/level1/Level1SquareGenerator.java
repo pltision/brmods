@@ -17,12 +17,14 @@ import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
 import yee.pltision.backrooms.block.level1.generator.Level1GeneratorDataEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static yee.pltision.backrooms.dimension.BackroomsFunction.*;
 
-@SuppressWarnings("ALL")
+@Deprecated
+@SuppressWarnings("All")
 public class Level1SquareGenerator extends Feature<NoneFeatureConfiguration> {
     public Level1SquareGenerator() {
         super(NoneFeatureConfiguration.CODEC);
@@ -52,118 +54,125 @@ public class Level1SquareGenerator extends Feature<NoneFeatureConfiguration> {
 
         BlockPos dataPos=getDataBlockPos(x,z);
 
+        System.out.println(dataPos+"生成方块实体");
+
         WorldGenLevel level=context.level();
 
         BlockState dataBlock=level.getBlockState(dataPos);
 
         Random random=context.random();
 
-        Level1GeneratorDataEntity north,south,west,east;
+        //获取实体
+        Level1GeneratorDataEntity north,south,west,east,entity;
         {
-            if (dataBlock == BrBlocks.Level1.GENERATED_BLOCK.get().defaultBlockState()) return false;
             if (dataBlock != BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState()) {
                 level.setBlock(dataPos, BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState(), 3);
-
-                Level1GeneratorDataEntity entity = (Level1GeneratorDataEntity) level.getBlockEntity(dataPos);
-
             }
+            entity= (Level1GeneratorDataEntity) level.getBlockEntity(dataPos);
+            if(entity.generated)return false;
 
             BlockState placeing;
             BlockPos placeingPos;
 
             placeingPos=dataPos.north(16);
             placeing=level.getBlockState(placeingPos);
-            if (placeing != BrBlocks.Level1.GENERATED_BLOCK.get().defaultBlockState()&&
-                    placeing != BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState()){
+            if (placeing != BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState()){
                 level.setBlock(placeingPos, BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState(), 3);
             }
             north = (Level1GeneratorDataEntity) level.getBlockEntity(placeingPos);
 
             placeingPos=dataPos.south(16);
             placeing=level.getBlockState(placeingPos);
-            if (placeing != BrBlocks.Level1.GENERATED_BLOCK.get().defaultBlockState()&&
-                    placeing != BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState()){
+            if (placeing != BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState()){
                 level.setBlock(placeingPos, BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState(), 3);
             }
             south = (Level1GeneratorDataEntity) level.getBlockEntity(placeingPos);
 
             placeingPos=dataPos.east(16);
             placeing=level.getBlockState(placeingPos);
-            if (placeing != BrBlocks.Level1.GENERATED_BLOCK.get().defaultBlockState()&&
-                    placeing != BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState()){
+            if (placeing != BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState()){
                 level.setBlock(placeingPos, BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState(), 3);
             }
             west = (Level1GeneratorDataEntity) level.getBlockEntity(placeingPos);
 
             placeingPos=dataPos.west(16);
             placeing=level.getBlockState(placeingPos);
-            if (placeing != BrBlocks.Level1.GENERATED_BLOCK.get().defaultBlockState()&&
-                    placeing != BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState()){
+            if (placeing != BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState()){
                 level.setBlock(placeingPos, BrBlocks.Level1.GENERATOR_DATA_BLOCK.get().defaultBlockState(), 3);
             }
             east = (Level1GeneratorDataEntity) level.getBlockEntity(placeingPos);
         }
-
-        Level1GeneratorDataEntity entity= (Level1GeneratorDataEntity) level.getBlockEntity(dataPos);
-
         if(entity.mainLayout.enable==false){
-            if ((random.nextInt() & 0b1111) != 0) {
-                entity.mainLayout.enable(BASE_HEIGHT + random.nextInt() % 4, 3 + random.nextInt() & 0b11);
+            if ((random.nextInt() & 0b1111) == 0) {
+                entity.mainLayout.enable(BASE_HEIGHT + random.nextInt() % 4, 4 +( random.nextInt() & 0b11),
+                        (random.nextInt()&Integer.MAX_VALUE)% Level1ColumnFeature.COLUMN.size());
             }
         }
 
+        //System.out.println("yee");
         if(entity.mainLayout.enable){
-            final int fromX,fromZ,toX,toZ;
-            if(entity.mainLayout.north==-1){
-                if(north!=null) north.mainLayout.copy(entity.mainLayout);
-                toZ=z+16;
-            }
-            else{
-                if(north!=null) north.mainLayout.enable=false;
-                toZ=z+16-entity.mainLayout.north;
-            }
-            if(entity.mainLayout.east==-1){
-                if(east!=null) east.mainLayout.copy(entity.mainLayout);
-                toX=16;
-            }
-            else{
-                if(east!=null) east.mainLayout.enable=false;
-                toX=16-entity.mainLayout.east;
+            //清空广场
+            {
+                final int fromX, fromZ, toX, toZ;
+                if (entity.mainLayout.north == -1) {
+                    if (north.generated == false) north.mainLayout.copy(entity.mainLayout);
+                    toZ = z + 16;
+                } else {
+                    if (north.generated == false) north.mainLayout.enable = false;
+                    toZ = z + 16 - entity.mainLayout.north;
+                }
+                if (entity.mainLayout.east == -1) {
+                    if (east.generated == false) east.mainLayout.copy(entity.mainLayout);
+                    toX = x + 16;
+                } else {
+                    if (east.generated == false) east.mainLayout.enable = false;
+                    toX = x + 16 - entity.mainLayout.east;
+                }
+
+                if (entity.mainLayout.south == -1) {
+                    if (south.generated == false) south.mainLayout.copy(entity.mainLayout);
+                    fromZ = z;
+                } else {
+                    if (south.generated == false) south.mainLayout.enable = false;
+                    fromZ = z + entity.mainLayout.south;
+                }
+                if (entity.mainLayout.west == -1) {
+                    if (west.generated == false) west.mainLayout.copy(entity.mainLayout);
+                    fromX = x;
+                } else {
+                    if (west.generated == false) west.mainLayout.enable = false;
+                    fromX = x + entity.mainLayout.west;
+                }
+                fill(level, Blocks.AIR.defaultBlockState(), fromX, entity.mainLayout.ground, fromZ, toX, entity.mainLayout.ground + entity.mainLayout.height, toZ);
             }
 
-            if(entity.mainLayout.south==-1){
-                if(south!=null) south.mainLayout.copy(entity.mainLayout);
-                fromZ=z;
-            }
-            else{
-                if(south!=null) south.mainLayout.enable=false;
-                fromZ=z+entity.mainLayout.south;
-            }
-            if(entity.mainLayout.west==-1){
-                if(west!=null) west.mainLayout.copy(entity.mainLayout);
-                fromX=x;
-            }
-            else{
-                if(west!=null) west.mainLayout.enable=false;
-                fromX=x+entity.mainLayout.west;
-            }
-            fill(level,fromX,entity.mainLayout.ground,fromZ,toX,entity.mainLayout.ground+entity.mainLayout.height,toZ);
         }
+        entity.generated=true;
+
+        level.setBlock(dataPos,BrBlocks.Level1.GENERATED_BLOCK.get().defaultBlockState(),3);
 
         return true;
     }
-    public BlockPos getDataBlockPos(int x,int z){
-        return new BlockPos(x,LEVEL1_HEIGHT,z);
+    public static BlockPos getDataBlockPos(int x,int z){
+        return new BlockPos(x,LEVEL1_TOP,z);
     }
 
-    public static void fill(WorldGenLevel level,int x,int y,int z,final int toX,final int toY,final int toZ){
-        BlockState air= Blocks.AIR.defaultBlockState();
-        for(;x<toX;x++){
-            for(;z<toZ;z++){
-                for(;y<toY;y++){
-                    level.setBlock(new BlockPos(x,y,z),air,3);
+    public static void fill(WorldGenLevel level, final BlockState state, final int x, final int y, final int z, final int toX, final int toY, final int toZ){
+        //System.out.println(x+" "+y+" "+z);
+        for(int i=x;i<toX;i++){
+            for(int j=z;j<toZ;j++){
+                for(int k=y;k<toY;k++){
+                    level.setBlock(new BlockPos(i,k,j),state,3);
                 }
             }
         }
     }
+
+
+
+
+
+
+
+
 }

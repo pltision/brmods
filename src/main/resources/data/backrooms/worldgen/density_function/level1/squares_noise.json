@@ -1,0 +1,12 @@
+{
+  "type": "p_noise",
+  "noise": {
+    "firstOctave": -7,
+    "amplitudes": [
+      3.5,
+      2
+    ]
+  },
+  "xz_scale": 1,
+  "y_scale": 96
+}

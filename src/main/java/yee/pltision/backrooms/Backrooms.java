@@ -1,7 +1,6 @@
 package yee.pltision.backrooms;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,9 +21,8 @@ import yee.pltision.backrooms.block.lootblock.EmptyShelfBlock;
 import yee.pltision.backrooms.block.lootblock.LootBlock;
 import yee.pltision.backrooms.dimension.BackroomsFunction;
 import yee.pltision.backrooms.dimension.DimensionInti;
-import yee.pltision.backrooms.dimension.WorldLoadingEvents;
+import yee.pltision.backrooms.dimension.FeatureAppends;
 import yee.pltision.backrooms.dimension.feature.level0.Level0Feature;
-import yee.pltision.mushroom.capability.EntityMushroomDataGetter;
 import yee.pltision.mushroom.capability.MushroomEffectCapability;
 import yee.pltision.mushroom.mc.MushroomMobEffects;
 
@@ -67,7 +65,7 @@ public class Backrooms
             e.printStackTrace();
             throw new RuntimeException(e);
         }*/
-        WorldLoadingEvents.REGISTER.register(bus);
+        FeatureAppends.REGISTER.register(bus);
 
         BrBlocks.REGISTER.register(bus);
         BrBlocks.ITEM_REGISTER.register(bus);

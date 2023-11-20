@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "backrooms:block/normal/wall_light/north"
+    },
+    "facing=east": {
+      "model": "backrooms:block/normal/wall_light/east"
+    },
+    "facing=south": {
+      "model": "backrooms:block/normal/wall_light/south"
+    },
+    "facing=west": {
+      "model": "backrooms:block/normal/wall_light/west"
+    }
+  }
+}

@@ -15,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BarrierBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -33,6 +32,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.Util;
 import yee.pltision.backrooms.block.level0.Level0Light;
+import yee.pltision.backrooms.block.level1.WallLight;
 import yee.pltision.backrooms.block.level1.generator.Level1GeneratorDataBlock;
 import yee.pltision.backrooms.block.lootblock.EmptyShelfBlock;
 import yee.pltision.backrooms.block.lootblock.StackableShelfBlock;
@@ -102,10 +102,10 @@ public class BrBlocks {
     }
 
     @Mod.EventBusSubscriber
-    public static class Level1{
-        public static final RegistryObject<Block> GENERATOR_DATA_BLOCK= REGISTER.register("level1/generator_data_block",()->
-                    new Level1GeneratorDataBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
-        public static final RegistryObject<Block> GENERATED_BLOCK= REGISTER.register("level1/generated_block",()->
+    public static class Level1 {
+        public static final RegistryObject<Block> GENERATOR_DATA_BLOCK = REGISTER.register("level1/generator_data_block", () ->
+                new Level1GeneratorDataBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
+        public static final RegistryObject<Block> GENERATED_BLOCK = REGISTER.register("level1/generated_block", () ->
                 new BarrierBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
     }
 
@@ -197,12 +197,18 @@ public class BrBlocks {
     public static class Normal{
         public static final RegistryObject<Block> CONCRETE=REGISTER.register("normal/concrete",()->
                 new BackroomsHardBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.BLACK).requiresCorrectToolForDrops().strength(5F,14F)));
-        public static final RegistryObject<Block> LIGHT_CONCRETE=REGISTER.register("normal/light_concrete",()->
+        public static final RegistryObject<Block> WHITE_CONCRETE =REGISTER.register("normal/white_concrete",()->
                 new BackroomsHardBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.WHITE).requiresCorrectToolForDrops().strength(5F,14F)));
+        public static final RegistryObject<Block> WALL_LIGHT =REGISTER.register("normal/wall_light",()->new WallLight(
+                BlockBehaviour.Properties.of(Material.DECORATION).lightLevel((p_187435_) -> 15).requiresCorrectToolForDrops().strength(1F, 10.0F).noOcclusion().sound(SoundType.STONE)
+        ));
+
         public static final RegistryObject<Item> CONCRETE_ITEM =
                 ITEM_REGISTER.register("normal/concrete",()-> new BlockItem(CONCRETE.get(),new Item.Properties()));
-        public static final RegistryObject<Item> LIGHT_CONCRETE_ITEM =
-                ITEM_REGISTER.register("normal/light_concrete",()-> new BlockItem(LIGHT_CONCRETE.get(),new Item.Properties()));
+        public static final RegistryObject<Item> WALL_LIGHT_ITEM =
+                ITEM_REGISTER.register("normal/wall_light",()-> new BlockItem(WALL_LIGHT.get(),new Item.Properties()));
+        public static final RegistryObject<Item> WHITE_CONCRETE_ITEM =
+                ITEM_REGISTER.register("normal/white_concrete",()-> new BlockItem(WHITE_CONCRETE.get(),new Item.Properties()));
 
     }
 

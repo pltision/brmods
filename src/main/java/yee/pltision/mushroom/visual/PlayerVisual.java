@@ -22,6 +22,7 @@ import static yee.pltision.mushroom.capability.MushroomEffectCapability.DebugHel
 
 public class PlayerVisual extends Thread{
     public static void main(String[] args) {
+        //noinspection CallToThreadRun
         new PlayerVisual(null).run();
     }
 
@@ -173,9 +174,9 @@ public class PlayerVisual extends Thread{
 
         byte[] buf=new byte[1024*2];
         DatagramPacket packet=new DatagramPacket(buf,buf.length);
-        InetAddress address=null;
         DatagramSocket socket=null;
         try {
+            InetAddress address;
             address=InetAddress.getByName("127.0.0.1");
             socket=new DatagramSocket(Util.MUSHROOM_DEBUG_DEBUGGER_PORT, address);
 
@@ -192,7 +193,7 @@ public class PlayerVisual extends Thread{
                 e.printStackTrace();
             }
             ByteArrayInputStream bis=new ByteArrayInputStream(buf);
-            Object obj=null;
+            Object obj;
             try {
                 obj=new ObjectInputStream(bis).readObject();
             } catch (Exception e) {

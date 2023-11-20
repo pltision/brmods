@@ -1,4 +1,52 @@
 {
-  "type": "level1_block",
-  "noise": "backrooms:level1/squares"
+  "type": "remove_short_space",
+  "noise":{
+    "type": "level1_block",
+    "noise": {
+      "type": "max",
+      "argument1": {
+        "type": "max",
+        "argument1": {
+          "type": "only_x",
+          "argument": "backrooms:level1/squares_noise"
+        },
+        "argument2": {
+          "type": "only_z",
+          "argument": "backrooms:level1/squares_noise"
+        }
+      },
+      "argument2": {
+        "type": "add",
+        "argument1": 0.0,
+        "argument2": {
+          "type": "move",
+          "move": {
+            "type": "only_y",
+            "argument": "backrooms:level1/squares_noise"
+          },
+          "dx": 0,
+          "dy": {
+            "type":"mul",
+            "argument1": 7,
+            "argument2": {
+              "type": "int",
+              "argument": {
+                "type": "min",
+                "argument1": {
+                  "type": "only_x",
+                  "argument": "backrooms:level1/move_noise"
+                },
+                "argument2": {
+                  "type": "only_z",
+                  "argument": "backrooms:level1/move_noise"
+                }
+              }
+            }
+          },
+          "dz": 0
+        }
+      }
+    }
+  },
+  "min": 3
 }

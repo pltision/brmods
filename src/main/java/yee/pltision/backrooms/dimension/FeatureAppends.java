@@ -16,13 +16,15 @@ import org.jetbrains.annotations.Nullable;
 import yee.pltision.Util;
 import yee.pltision.backrooms.dimension.feature.TestFeature;
 import yee.pltision.backrooms.dimension.feature.level0.*;
+import yee.pltision.backrooms.dimension.feature.level1.Level1ColumnFeature;
+import yee.pltision.backrooms.dimension.feature.level1.Level1StreetGenerator;
 
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber
-public class WorldLoadingEvents {
+public class FeatureAppends {
     public static class FeatureGenerationData{
         public final @Nullable Set<ResourceLocation> generatableBiomes;
         public final GenerationStep.Decoration decoration;
@@ -59,6 +61,15 @@ public class WorldLoadingEvents {
     public static final RegistryObject<Feature<?>> LEVEL0_C_CORRIDOR_FEATURE=registry("level0_c_corridor", CCorridorFeature::feature,
             new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level0/c_corridor")),GenerationStep.Decoration.UNDERGROUND_DECORATION,CCorridorFeature::placedFeature)
     );
+    /*public static final RegistryObject<Feature<?>> LEVEL1_SQUARES=registry("level1/squares", Level1SquareGenerator::feature,
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level1/square")),GenerationStep.Decoration.RAW_GENERATION,Level1SquareGenerator::placedFeature)
+    );*/
+    public static final RegistryObject<Feature<?>> LEVEL1_COLUMN=registry("level1/columns", Level1ColumnFeature::feature,
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level1/square")),GenerationStep.Decoration.UNDERGROUND_STRUCTURES,Level1ColumnFeature::placedFeature)
+    );
+    public static final RegistryObject<Feature<?>> LEVEL1_STREET=registry("level1/street", Level1StreetGenerator::feature,
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level1/square")),GenerationStep.Decoration.UNDERGROUND_STRUCTURES,Level1StreetGenerator::placedFeature)
+    );
 
     public static final RegistryObject<Feature<?>> FUNCTION_TEST=registry("test_feature", TestFeature::feature,
             new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:test")), TestFeature::placedFeature)
@@ -73,9 +84,12 @@ public class WorldLoadingEvents {
 
     @SubscribeEvent
     static public void biomeLoading(BiomeLoadingEvent event){
+
         for(FeatureGenerationData data: FEATURE_GENERATION_DATA){
             if(data.generatableBiomes==null||data.generatableBiomes.contains(event.getName())){
                 event.getGeneration().getFeatures(data.decoration).add(data.placedFeature.get());
+                //event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES).add(PLACED_FEATURE);
+
             }
         }
     }

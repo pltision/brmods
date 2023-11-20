@@ -130,7 +130,7 @@ public class MushroomEffectCapability {
     @SubscribeEvent
     public static void tick(TickEvent.PlayerTickEvent event){
         event.player.getCapability(CAPABILITY).ifPresent(cap->{
-            DebugHelper.debug(cap.getEntityData());
+            //DebugHelper.debug(cap.getEntityData());
 
             //new PlayerVisual(cap.getEntityData()).start();
             cap.tick(event.player);
