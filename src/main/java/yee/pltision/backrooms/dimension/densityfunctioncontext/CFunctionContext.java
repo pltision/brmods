@@ -3,7 +3,7 @@ package yee.pltision.backrooms.dimension.densityfunctioncontext;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
 public class CFunctionContext implements DensityFunction.FunctionContext {
-    public final int x,y,z;
+    public int x,y,z;
 
     public CFunctionContext(int startX, int startY, int startZ) {
         x = startX;

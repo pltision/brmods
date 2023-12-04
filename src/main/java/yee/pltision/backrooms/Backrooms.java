@@ -50,8 +50,9 @@ public class Backrooms
         bus.addListener(EmptyShelfBlock::inti);
         bus.addListener(LootBlock::inti);
         bus.addListener(Level0Feature::inti);
+        //bus.addListener(FeatureAppends::setup);
 
-        MushroomEffectCapability.DebugHelper.setupListener();
+        //MushroomEffectCapability.DebugHelper.setupListener();
 
 //        bus.addListener(MushroomEffectCapability::registerCapability);
 //        bus.addListener(MushroomEffectCapability::onPlayerCloned);

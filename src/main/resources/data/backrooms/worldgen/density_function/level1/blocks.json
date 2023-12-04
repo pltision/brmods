@@ -27,18 +27,22 @@
           "dx": 0,
           "dy": {
             "type":"mul",
-            "argument1": 7,
+            "argument1": 27,
             "argument2": {
               "type": "int",
               "argument": {
-                "type": "min",
-                "argument1": {
-                  "type": "only_x",
-                  "argument": "backrooms:level1/move_noise"
-                },
+                "type": "mul",
+                "argument1": 4,
                 "argument2": {
-                  "type": "only_z",
-                  "argument": "backrooms:level1/move_noise"
+                  "type": "min",
+                  "argument1": {
+                    "type": "only_x",
+                    "argument": "backrooms:level1/move_noise"
+                  },
+                  "argument2": {
+                    "type": "only_z",
+                    "argument": "backrooms:level1/move_noise"
+                  }
                 }
               }
             }

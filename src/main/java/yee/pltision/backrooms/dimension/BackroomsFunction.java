@@ -1,7 +1,6 @@
 package yee.pltision.backrooms.dimension;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.*;
@@ -43,7 +42,8 @@ public class BackroomsFunction {
 
     public static final int BASE_HEIGHT=49;
     public static final int LEVEL1_TOP=95;
-    public static final int LEVEL1_MINABLE_TOP =89;
+    public static final int LEVEL1_MINABLE_TOP =93;
+    public static final int LEVEL1_MINABLE_BOTTOM =-31;
     public static final int LEVEL1_HEIGHT=6;
 
     public BackroomsFunction() throws IOException {
@@ -297,10 +297,6 @@ public class BackroomsFunction {
         }
     }
 
-    public static NormalNoise seedNoise(PositionalRandomFactory p_209525_, Registry<NormalNoise.NoiseParameters> p_209526_, Holder<NormalNoise.NoiseParameters> p_209527_) {
-        return Noises.instantiate(p_209525_, p_209527_.unwrapKey().flatMap(p_209526_::getHolder).orElse(p_209527_));
-    }
-
     public record Noise(Holder<NormalNoise.NoiseParameters> noiseData, @javax.annotation.Nullable NormalNoise noise, double xzScale, double yScale) implements DensityFunction.SimpleFunction {
         public static final MapCodec<Noise> DATA_CODEC = RecordCodecBuilder.mapCodec((p_208798_) -> p_208798_.group(
                 NormalNoise.NoiseParameters.CODEC.fieldOf("noise").forGetter(Noise::noiseData),
@@ -469,6 +465,8 @@ public class BackroomsFunction {
     }
 
     public record Level1BlockFunction(DensityFunction noise)implements DensityFunction.SimpleFunction{
+        public static final int MAIN_LAYOUT_START=60,MAIN_LAYOUT_END=90;
+
         public static final Codec<Level1BlockFunction> CODEC = RecordCodecBuilder.create((p_208359_) ->
                 p_208359_.group(
                         DensityFunction.HOLDER_HELPER_CODEC.fieldOf("noise").forGetter(Level1BlockFunction::noise)
@@ -476,7 +474,7 @@ public class BackroomsFunction {
 
         @Override
         public double compute(@NotNull FunctionContext c) {
-            if(c.blockY()<45||c.blockY()>65)return 1;
+            if(c.blockY()<MAIN_LAYOUT_START||c.blockY()>=MAIN_LAYOUT_END)return 1;
             return noise.compute(c)>0?1:0;
         }
 
@@ -825,12 +823,14 @@ public class BackroomsFunction {
     public static DensityFunction LEVEL0_CORRIDOR_NOISE;
     public static DensityFunction COLUMN_NOISE;
     public static DensityFunction STREET_NOISE;
+    public static DensityFunction MAIN_LAYOUT_LIGHT;
+    public static DensityFunction LEVEL1_BLOCKS;
 
     public static long seed;
 
 
     @SubscribeEvent
-    public static void worldLoading(ServerAboutToStartEvent event){
+    public static void serverStarting(ServerAboutToStartEvent event){
         //System.out.println("worldLoading被执行");
         seed= event.getServer().getWorldData().worldGenSettings().seed();
         MinecraftServer server=event.getServer();
@@ -851,6 +851,10 @@ public class BackroomsFunction {
                     "worldgen/density_function/level1/xz_noise.json"));
             STREET_NOISE=readFunction(manager,new ResourceLocation(Util.MODID,
                     "worldgen/density_function/level1/street.json"));
+            MAIN_LAYOUT_LIGHT=readFunction(manager,new ResourceLocation(Util.MODID,
+                    "worldgen/density_function/level1/light_noise.json"));
+            LEVEL1_BLOCKS=readFunction(manager,new ResourceLocation(Util.MODID,
+                    "worldgen/density_function/level1/blocks.json"));
 
         } catch (IOException|ClassCastException e) {
             e.printStackTrace();
@@ -871,10 +875,12 @@ public class BackroomsFunction {
             LEVEL0_BMPS =new RectRaft[length];
             for (int i = 0; i < length; i++) {
                 LEVEL0_BMPS[i] = RectRaft.createWithImage(ImageIO.read(manager.getResource(new ResourceLocation(Util.MODID,"worldgen/levelbpms/level0/level0_"+i+".png")).getInputStream()));
+                //System.out.println(i);
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 

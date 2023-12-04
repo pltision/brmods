@@ -1,0 +1,31 @@
+{
+    "name":"backrooms:level1/spiral_staircase/a",
+    "fallback":"empty",
+    "elements":[
+        {
+            "weight":8,
+            "element":{
+                "projection":"rigid",
+                "element_type":"single_pool_element",
+                "location":"backrooms:level1/spiral_staircase/a/a",
+                "processors":"empty"
+            }
+        },
+        {
+            "weight":2,
+            "element":{
+                "projection":"rigid",
+                "element_type":"single_pool_element",
+                "location":"backrooms:level1/spiral_staircase/a/top/a",
+                "processors":"empty"
+            }
+        },
+
+        {
+            "weight":2,
+            "element":{
+                "element_type":"empty_pool_element"
+            }
+        }
+    ]
+}

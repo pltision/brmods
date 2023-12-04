@@ -20,8 +20,7 @@ import yee.pltision.backrooms.dimension.densityfunctioncontext.CFunctionContext;
 import java.util.ArrayList;
 import java.util.List;
 
-import static yee.pltision.backrooms.dimension.BackroomsFunction.COLUMN_NOISE;
-import static yee.pltision.backrooms.dimension.BackroomsFunction.LEVEL1_MINABLE_TOP;
+import static yee.pltision.backrooms.dimension.BackroomsFunction.*;
 import static yee.pltision.backrooms.dimension.feature.level1.Level1SquareGenerator.fill;
 
 
@@ -65,14 +64,14 @@ public class Level1ColumnFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     public static ArrayList<Filler> COLUMN=new ArrayList<>(List.of(
-            (level,x,z)-> fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x,1,z,x+2,LEVEL1_MINABLE_TOP,z+2),
+            (level,x,z)-> fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x,LEVEL1_MINABLE_BOTTOM,z,x+2,LEVEL1_MINABLE_TOP,z+2),
             (level,x,z)-> {
-                fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x-1,1,z,x+3,LEVEL1_MINABLE_TOP,z+3);
-                fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x,1,z-1,x+2,LEVEL1_MINABLE_TOP,z);
-                fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x,1,z+2,x+2,LEVEL1_MINABLE_TOP,z+2);
+                fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x-1,LEVEL1_MINABLE_BOTTOM,z,x+3,LEVEL1_MINABLE_TOP,z+2);
+                fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x,LEVEL1_MINABLE_BOTTOM,z-1,x+2,LEVEL1_MINABLE_TOP,z);
+                fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x,LEVEL1_MINABLE_BOTTOM,z+2,x+2,LEVEL1_MINABLE_TOP,z+3);
             },
-            (level,x,z)-> fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x,1,z,x+3,LEVEL1_MINABLE_TOP,z+3),
-            (level,x,z)-> fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x-1,1,z-1,x+3,LEVEL1_MINABLE_TOP,z+3)
+            (level,x,z)-> fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x-1,LEVEL1_MINABLE_BOTTOM,z-1,x+2,LEVEL1_MINABLE_TOP,z+2),
+            (level,x,z)-> fill(level,BrBlocks.Normal.CONCRETE.get().defaultBlockState(), x-1,LEVEL1_MINABLE_BOTTOM,z-1,x+3,LEVEL1_MINABLE_TOP,z+3)
 
     ));
 }

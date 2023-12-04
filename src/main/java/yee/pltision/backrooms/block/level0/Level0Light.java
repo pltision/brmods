@@ -4,6 +4,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,7 +29,27 @@ public class Level0Light extends BackroomsLightBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_54935_) {
         p_54935_.add(AXIS);
     }
+    public BlockState rotate(BlockState p_55930_, Rotation p_55931_) {
+        return rotatePillar(p_55930_, p_55931_);
+    }
 
+    /*复制自RotatedPillarBlock*/
+    public static BlockState rotatePillar(BlockState p_154377_, Rotation p_154378_) {
+        switch(p_154378_) {
+            case COUNTERCLOCKWISE_90:
+            case CLOCKWISE_90:
+                switch(p_154377_.getValue(AXIS)) {
+                    case X:
+                        return p_154377_.setValue(AXIS, Direction.Axis.Z);
+                    case Z:
+                        return p_154377_.setValue(AXIS, Direction.Axis.X);
+                    default:
+                        return p_154377_;
+                }
+            default:
+                return p_154377_;
+        }
+    }
 
 
 }

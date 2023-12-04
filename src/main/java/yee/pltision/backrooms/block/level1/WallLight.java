@@ -9,6 +9,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -20,7 +22,7 @@ import yee.pltision.backrooms.block.type.BackroomsLightBlock;
 import yee.pltision.backrooms.block.type.IBackroomsLightBlock;
 
 public class WallLight extends BackroomsLightBlock {
-    DirectionProperty FACING= BlockStateProperties.HORIZONTAL_FACING;
+    public static final DirectionProperty FACING= BlockStateProperties.HORIZONTAL_FACING;
 
     public static final VoxelShape SOUTH_AABB =
             Block.box(4.0D, 0.0D, 0.0D,
@@ -37,6 +39,14 @@ public class WallLight extends BackroomsLightBlock {
 
     public WallLight(Properties p_49795_) {
         super(p_49795_);
+    }
+
+    public BlockState rotate(BlockState p_54241_, Rotation p_54242_) {
+        return p_54241_.setValue(FACING, p_54242_.rotation().rotate(p_54241_.getValue(FACING)));
+    }
+
+    public BlockState mirror(BlockState p_54238_, Mirror p_54239_) {
+        return p_54238_.setValue(FACING, p_54239_.rotation().rotate(p_54238_.getValue(FACING)));
     }
 
     @Override

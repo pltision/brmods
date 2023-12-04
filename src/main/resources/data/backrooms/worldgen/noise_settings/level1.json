@@ -11,8 +11,8 @@
     "Name": "minecraft:air"
   },
   "noise": {
-    "min_y": 32,
-    "height": 64,
+    "min_y": -32,
+    "height": 128,
     "size_horizontal": 1,
     "size_vertical": 2,
     "sampling": {
@@ -62,7 +62,7 @@
         "if_true": {
           "type": "minecraft:y_above",
           "anchor": {
-            "absolute": 90
+            "absolute": 94
           },
           "surface_depth_multiplier": 0,
           "add_stone_depth": false
@@ -81,7 +81,7 @@
           "invert": {
             "type": "minecraft:y_above",
             "anchor": {
-              "absolute": 33
+              "absolute": -31
             },
             "surface_depth_multiplier": 0,
             "add_stone_depth": false
