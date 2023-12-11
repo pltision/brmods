@@ -3,6 +3,8 @@ pertaz'es Backrooms Generator
 
 版权所有 (c) 2023 pertaz
 
+此文本暂未使用，请看试玩版许可证
+
 这个项目使用的是 CC BY 4.0 许可证。
 
 您可以自由地：

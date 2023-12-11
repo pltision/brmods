@@ -19,9 +19,12 @@ import yee.pltision.Util;
 import yee.pltision.backrooms.block.BrBlocks;
 import yee.pltision.backrooms.block.lootblock.EmptyShelfBlock;
 import yee.pltision.backrooms.block.lootblock.LootBlock;
+import yee.pltision.backrooms.block.test.TestBlock;
+import yee.pltision.backrooms.block.test.TestBlockEntity;
 import yee.pltision.backrooms.dimension.BackroomsFunction;
 import yee.pltision.backrooms.dimension.DimensionInti;
 import yee.pltision.backrooms.dimension.FeatureAppends;
+import yee.pltision.backrooms.dimension.feature.StructureType;
 import yee.pltision.backrooms.dimension.feature.level0.Level0Feature;
 import yee.pltision.mushroom.capability.MushroomEffectCapability;
 import yee.pltision.mushroom.mc.MushroomMobEffects;
@@ -50,22 +53,11 @@ public class Backrooms
         bus.addListener(EmptyShelfBlock::inti);
         bus.addListener(LootBlock::inti);
         bus.addListener(Level0Feature::inti);
-        //bus.addListener(FeatureAppends::setup);
+        bus.addListener(TestBlockEntity::inti);
+        bus.addListener(BrRenderTypes::inti);
 
-        //MushroomEffectCapability.DebugHelper.setupListener();
+        StructureType.REGISTER.register(bus);
 
-//        bus.addListener(MushroomEffectCapability::registerCapability);
-//        bus.addListener(MushroomEffectCapability::onPlayerCloned);
-//        bus.addListener(MushroomEffectCapability::onAttachCapabilityEvent);
-//        bus.addListener(MushroomEffectCapability::registerCaps);
-
-        /*try {
-            bus.addGenericListener(null,MushroomEffectCapability::registerCapability);
-        }
-        catch (Throwable e){
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }*/
         FeatureAppends.REGISTER.register(bus);
 
         BrBlocks.REGISTER.register(bus);

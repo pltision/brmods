@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.level0.Level0Light;
+import yee.pltision.backrooms.block.normal.XZLight;
 
 import java.util.List;
 import java.util.Random;
@@ -60,7 +60,7 @@ public class Level0LightFeature extends Feature<NoneFeatureConfiguration> {
                     wight>>=1;
                 }
 
-                BlockState light= BrBlocks.Level0.LIGHT.get().defaultBlockState().setValue(Level0Light.AXIS,axis);
+                BlockState light= BrBlocks.Level0.LIGHT.get().defaultBlockState().setValue(XZLight.AXIS,axis);
 
                 while(true){
                     if(
@@ -87,7 +87,7 @@ public class Level0LightFeature extends Feature<NoneFeatureConfiguration> {
                     wight>>=1;
                 }
 
-                BlockState light= BrBlocks.Level0.LIGHT.get().defaultBlockState().setValue(Level0Light.AXIS,axis);
+                BlockState light= BrBlocks.Level0.LIGHT.get().defaultBlockState().setValue(XZLight.AXIS,axis);
 
                 while(true){
                     if(

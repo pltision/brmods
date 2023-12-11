@@ -16,12 +16,10 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.level0.Level0Light;
-import yee.pltision.backrooms.dimension.BackroomsFunction;
+import yee.pltision.backrooms.block.normal.XZLight;
 import yee.pltision.backrooms.dimension.densityfunctioncontext.AbsoluteYFunctionContext;
 
 import java.util.List;
-import java.util.Random;
 
 import static yee.pltision.backrooms.dimension.BackroomsFunction.BASE_HEIGHT;
 import static yee.pltision.backrooms.dimension.BackroomsFunction.LEVEL0_CORRIDOR_NOISE;
@@ -86,7 +84,7 @@ public class XCorridorFeature extends Feature<NoneFeatureConfiguration> {
 
         //生成灯
         if(((z^237498270)&0b110000)!=0){
-            BlockState light=BrBlocks.Level0.LIGHT.get().defaultBlockState().setValue(Level0Light.AXIS,Direction.Axis.Z);
+            BlockState light=BrBlocks.Level0.LIGHT.get().defaultBlockState().setValue(XZLight.AXIS,Direction.Axis.Z);
             level.setBlock(new BlockPos(x+4,BASE_HEIGHT+5,z+3),light,3);
             level.setBlock(new BlockPos(x+4,BASE_HEIGHT+5,z+4),light,3);
             level.setBlock(new BlockPos(x+12,BASE_HEIGHT+5,z+3),light,3);

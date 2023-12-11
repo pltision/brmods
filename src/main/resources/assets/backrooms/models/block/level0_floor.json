@@ -3,6 +3,7 @@
   "textures": {
     "top": "backrooms:block/level0_carpet",
     "bottom": "backrooms:block/level0_bricks",
-    "side": "backrooms:block/level0_bricks"
+    "side": "backrooms:block/level0_bricks",
+    "particle": "backrooms:block/level0_carpet"
   }
 }

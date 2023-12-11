@@ -1,6 +1,6 @@
 {
   "type": "add",
-  "argument1": -0.7,
+  "argument1": -0.5,
   "argument2": {
     "type": "p_noise",
     "noise": {

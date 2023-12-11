@@ -141,7 +141,7 @@ public class MushroomEffectCapability {
     public static void registerCapability(AttachCapabilitiesEvent<Entity> event){
         //System.out.println("Capability");
         if(event.getObject() instanceof Player){
-            event.addCapability(new ResourceLocation(Util.MODID,"mushroom"), new MushroomEffectCapabilityProvider());
+            event.addCapability(new ResourceLocation(Util.MODID,"mushroom_effect"), new MushroomEffectCapabilityProvider());
         }
     }
 
@@ -152,18 +152,14 @@ public class MushroomEffectCapability {
             LazyOptional<EntityMushroomDataGetter> oldSpeedCap = event.getOriginal().getCapability(CAPABILITY);
             LazyOptional<EntityMushroomDataGetter> newSpeedCap = event.getPlayer().getCapability(CAPABILITY);
             if (oldSpeedCap.isPresent() && newSpeedCap.isPresent()) {
-                newSpeedCap.ifPresent((newCap) -> {
-                    oldSpeedCap.ifPresent((oldCap) -> {
-                        newCap.deserializeNBT(oldCap.serializeNBT());
-                    });
-                });
+                newSpeedCap.ifPresent((newCap) -> oldSpeedCap.ifPresent((oldCap) -> newCap.deserializeNBT(oldCap.serializeNBT())));
             }
         }
     }
 
     @SubscribeEvent
     public static void save(PlayerEvent.SaveToFile event){
-        File save=new File(event.getPlayerDirectory().getPath()+"/mushroom_data.dat");
+        File save=new File(event.getPlayerDirectory().getPath()+"/mushroom_effect.dat");
         event.getPlayer().getCapability(CAPABILITY).ifPresent(cap->{
             try {
                 NbtIo.write(cap.serializeNBT(),save);

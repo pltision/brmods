@@ -1,5 +1,7 @@
 package yee.pltision.backrooms.block;
 
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -31,8 +33,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.Util;
-import yee.pltision.backrooms.block.level0.Level0Light;
-import yee.pltision.backrooms.block.level1.WallLight;
+import yee.pltision.backrooms.block.concrete.ConcreteBlock;
+import yee.pltision.backrooms.block.concrete.ConcreteRubbleBlock;
+import yee.pltision.backrooms.block.concrete.CrackingConcreteBlock;
+import yee.pltision.backrooms.block.normal.XZLight;
+import yee.pltision.backrooms.block.normal.WallLight;
 import yee.pltision.backrooms.block.level1.generator.Level1GeneratorDataBlock;
 import yee.pltision.backrooms.block.lootblock.EmptyShelfBlock;
 import yee.pltision.backrooms.block.lootblock.StackableShelfBlock;
@@ -52,7 +57,9 @@ public class BrBlocks {
     @Mod.EventBusSubscriber
     public static class Level0{
         public static final RegistryObject<Block> LIGHT =
-                REGISTER.register("level0_light", Level0Light::new);
+                REGISTER.register("level0_light",()-> new XZLight(
+                        BlockBehaviour.Properties.of(Material.DECORATION).instabreak().lightLevel((p_187435_) -> 15).requiresCorrectToolForDrops().strength(1F, 10.0F).noCollission().sound(SoundType.GLASS)
+                ));
 
         public static final RegistryObject<Block> WALL =
                 REGISTER.register("level0_wall",()->
@@ -202,14 +209,44 @@ public class BrBlocks {
         public static final RegistryObject<Block> WALL_LIGHT =REGISTER.register("normal/wall_light",()->new WallLight(
                 BlockBehaviour.Properties.of(Material.DECORATION).lightLevel((p_187435_) -> 15).requiresCorrectToolForDrops().strength(1F, 10.0F).noOcclusion().sound(SoundType.STONE)
         ));
+        public static final RegistryObject<Block> CEILING_LAMP=REGISTER.register("normal/ceiling_lamp",()-> new XZLight(
+                BlockBehaviour.Properties.of(Material.DECORATION).instabreak().lightLevel((p_187435_) -> 15).requiresCorrectToolForDrops().strength(1F, 10.0F).noCollission().sound(SoundType.GLASS)
+        ){
+            @Override
+            protected void inti(XZLight light) {
+                ItemBlockRenderTypes.setRenderLayer(light, renderType -> renderType == RenderType.cutout());
+            }
+        });
 
         public static final RegistryObject<Item> CONCRETE_ITEM =
                 ITEM_REGISTER.register("normal/concrete",()-> new BlockItem(CONCRETE.get(),new Item.Properties()));
-        public static final RegistryObject<Item> WALL_LIGHT_ITEM =
-                ITEM_REGISTER.register("normal/wall_light",()-> new BlockItem(WALL_LIGHT.get(),new Item.Properties()));
         public static final RegistryObject<Item> WHITE_CONCRETE_ITEM =
                 ITEM_REGISTER.register("normal/white_concrete",()-> new BlockItem(WHITE_CONCRETE.get(),new Item.Properties()));
+        public static final RegistryObject<Item> WALL_LIGHT_ITEM =
+                ITEM_REGISTER.register("normal/wall_light",()-> new BlockItem(WALL_LIGHT.get(),new Item.Properties()));
+        public static final RegistryObject<Item> CEILING_LAMP_ITEM =
+                ITEM_REGISTER.register("normal/ceiling_lamp",()-> new BlockItem(CEILING_LAMP.get(),new Item.Properties()));
 
+    }
+
+    @Mod.EventBusSubscriber
+    public static class Concretes{
+        public static final RegistryObject<Block> CONCRETE=REGISTER.register("concrete",()->
+                new ConcreteBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.BLACK).requiresCorrectToolForDrops().strength(5.5F,14F)));
+        public static final RegistryObject<Block> CRACKING_CONCRETE=REGISTER.register("concrete/cracking",()->
+                new CrackingConcreteBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.BLACK).requiresCorrectToolForDrops().strength(5F,13F)));
+        public static final RegistryObject<Block> CONCRETE_RUBBLE =REGISTER.register("concrete_rubble",()->
+                new ConcreteRubbleBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.BLACK).requiresCorrectToolForDrops().strength(3F,13F)));
+
+        public static final RegistryObject<Block> WHITE_CONCRETE =REGISTER.register("white_concrete",()->
+                new BackroomsHardBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.WHITE).requiresCorrectToolForDrops().strength(5F,15F)));
+
+        public static final RegistryObject<Item> CONCRETE_ITEM =
+                ITEM_REGISTER.register("concrete",()-> new BlockItem(CONCRETE.get(),new Item.Properties()));
+        public static final RegistryObject<Item> CRACKED_CONCRETE_ITEM =
+                ITEM_REGISTER.register("concrete_rubble",()-> new BlockItem(CONCRETE_RUBBLE.get(),new Item.Properties()));
+        public static final RegistryObject<Item> WHITE_CONCRETE_ITEM =
+                ITEM_REGISTER.register("white_concrete",()-> new BlockItem(WHITE_CONCRETE.get(),new Item.Properties()));
     }
 
     @Mod.EventBusSubscriber

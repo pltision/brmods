@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "backrooms:block/normal/ceiling_lamp/ceiling_lamp_x"
+    },
+    "axis=z": {
+      "model": "backrooms:block/normal/ceiling_lamp/ceiling_lamp_z"
+    }
+  }
+}

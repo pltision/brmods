@@ -1,12 +1,21 @@
 {
   "type": "mul",
-  "argument1": 16,
+  "argument1": 1,
   "argument2": {
-    "type": "minecraft:old_blended_noise",
-    "xz_scale": 2,
-    "y_scale": 2,
-    "xz_factor": 20,
-    "y_factor": 0.001,
-    "smear_scale_multiplier": 1
+    "type":"constant_average_block",
+    "argument": {
+      "type": "p_noise",
+      "noise": {
+        "firstOctave": -10,
+        "amplitudes": [
+          17,
+          13,
+          11,
+          2,1,1,1,1
+        ]
+      },
+      "xz_scale": 1,
+      "y_scale": 0
+    }
   }
 }

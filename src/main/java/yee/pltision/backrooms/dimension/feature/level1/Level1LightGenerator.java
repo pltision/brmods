@@ -8,9 +8,7 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.AirBlock;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -18,25 +16,23 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.level1.WallLight;
+import yee.pltision.backrooms.block.normal.WallLight;
 import yee.pltision.backrooms.dimension.densityfunctioncontext.CFunctionContext;
-import yee.pltision.backrooms.dimension.densityfunctioncontext.DeviationableFunctionContext;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Spliterator;
 import java.util.function.Supplier;
 
-import static java.lang.Math.min;
-import static yee.pltision.backrooms.dimension.BackroomsFunction.*;
-import static yee.pltision.backrooms.dimension.feature.level1.Level1SquareGenerator.fill;
+import static yee.pltision.backrooms.dimension.BackroomsFunction.Level1BlockFunction;
+import static yee.pltision.backrooms.dimension.BackroomsFunction.MAIN_LAYOUT_LIGHT;
 
 public class Level1LightGenerator extends Feature<NoneFeatureConfiguration> {
     public Level1LightGenerator() {
         super(NoneFeatureConfiguration.CODEC);
     }
+
+
 
     public static Holder<PlacedFeature> PLACED_FEATURE;
 

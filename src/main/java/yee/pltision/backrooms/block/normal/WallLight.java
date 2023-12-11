@@ -1,4 +1,4 @@
-package yee.pltision.backrooms.block.level1;
+package yee.pltision.backrooms.block.normal;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

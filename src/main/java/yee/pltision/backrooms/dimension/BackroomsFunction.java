@@ -13,7 +13,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.io.IOUtils;
@@ -54,6 +54,11 @@ public class BackroomsFunction {
     }
 
     public record Level0GraphFunction(DensityFunction graph, DensityFunction turn) implements DensityFunction.SimpleFunction{
+        public Level0GraphFunction(DensityFunction graph, DensityFunction turn){
+            this.graph=graph;
+            this.turn=turn;
+            LEVEL0_GRAPH= this;
+        }
 
         public static final Codec<Level0GraphFunction> CODEC = RecordCodecBuilder.create((p_208359_) ->
                 p_208359_.group(
@@ -830,17 +835,17 @@ public class BackroomsFunction {
 
 
     @SubscribeEvent
-    public static void serverStarting(ServerAboutToStartEvent event){
+    public static void load(WorldEvent.Load event){
         //System.out.println("worldLoading被执行");
-        seed= event.getServer().getWorldData().worldGenSettings().seed();
-        MinecraftServer server=event.getServer();
+
+        MinecraftServer server=event.getWorld().getServer();
         if(server==null) return;
+        seed= server.getWorldData().worldGenSettings().seed();
         ResourceManager manager= server.getServerResources().resourceManager();
-        LEVEL0_GRAPH =null;
-        LEVEL0_TYPE_NOISE =null;
+
         try {
             //event.getWorld().getServer().getServerResources()
-            LEVEL0_GRAPH=readFunction(manager,new ResourceLocation(Util.MODID,"worldgen/density_function/level0_graph_function.json"));
+            //LEVEL0_GRAPH=readFunction(manager,new ResourceLocation(Util.MODID,"worldgen/density_function/level0_graph_function.json"));
             LEVEL0_TYPE_NOISE=readFunction(manager,new ResourceLocation(Util.MODID,"worldgen/density_function/level0_type_noise.json"));
             TEST_NOISE=readFunction(manager,new ResourceLocation(Util.MODID,
                     "worldgen/density_function/test_noise.json"));
@@ -853,8 +858,8 @@ public class BackroomsFunction {
                     "worldgen/density_function/level1/street.json"));
             MAIN_LAYOUT_LIGHT=readFunction(manager,new ResourceLocation(Util.MODID,
                     "worldgen/density_function/level1/light_noise.json"));
-            LEVEL1_BLOCKS=readFunction(manager,new ResourceLocation(Util.MODID,
-                    "worldgen/density_function/level1/blocks.json"));
+//            LEVEL1_BLOCKS=readFunction(manager,new ResourceLocation(Util.MODID,
+//                    "worldgen/density_function/level1/blocks.json"));
 
         } catch (IOException|ClassCastException e) {
             e.printStackTrace();

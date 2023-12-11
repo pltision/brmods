@@ -1,35 +1,28 @@
-package yee.pltision.backrooms.block.level0;
+package yee.pltision.backrooms.block.normal;
 
 import net.minecraft.core.Direction;
-import net.minecraft.core.FrontAndTop;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.material.Material;
+import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.type.BackroomsLightBlock;
 
-import static net.minecraft.world.level.block.NetherPortalBlock.AXIS;
-
-public class Level0Light extends BackroomsLightBlock {
-    public static EnumProperty<Direction.Axis> AXIS= BlockStateProperties.AXIS;
-    public Level0Light() {
-        super(
-                BlockBehaviour.Properties.of(Material.DECORATION).instabreak().lightLevel((p_187435_) -> 15).requiresCorrectToolForDrops().strength(1F, 10.0F).noCollission().sound(SoundType.GLASS)
-        );
+public class XZLight extends BackroomsLightBlock {
+    public static EnumProperty<Direction.Axis> AXIS= BlockStateProperties.HORIZONTAL_AXIS;
+    public XZLight(Properties p_49795_) {
+        super(p_49795_);
         this.registerDefaultState(this.stateDefinition.any().setValue(AXIS, Direction.Axis.X));
+        inti(this);
     }
-    public Level0Light(Properties p_49795_) {super(p_49795_);}
+    protected void inti(XZLight light){}
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_54935_) {
         p_54935_.add(AXIS);
     }
-    public BlockState rotate(BlockState p_55930_, Rotation p_55931_) {
+    public BlockState rotate(@NotNull BlockState p_55930_, @NotNull Rotation p_55931_) {
         return rotatePillar(p_55930_, p_55931_);
     }
 
