@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "backrooms:block/concrete/concrete"
+      "model": "backrooms:block/concretes/concrete"
     }
   }
 }

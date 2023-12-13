@@ -22,7 +22,7 @@ public interface EntityMushroomDataGetter extends INBTSerializable<CompoundTag> 
     default CompoundTag serializeNBT(){
         EntityMushroomData data=getEntityData();
         CompoundTag tag=new CompoundTag();
-        tag.putDouble("dry",data.dry);
+        tag.putDouble("wet",data.wet);
         tag.putDouble("temperature",data.temperature);
         tag.putDouble("toxin",data.toxin);
         ListTag effects=new ListTag();
@@ -46,7 +46,7 @@ public interface EntityMushroomDataGetter extends INBTSerializable<CompoundTag> 
 
     static void deserializeNBT(EntityMushroomData data, CompoundTag nbt){
         //EntityMushroomData data=new EntityMushroomData();
-        data.dry=nbt.getDouble("dry");
+        data.wet =nbt.getDouble("wet");
         data.temperature=nbt.getDouble("temperature");
         data.toxin=nbt.getDouble("toxin");
 

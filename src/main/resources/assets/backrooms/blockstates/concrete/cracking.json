@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=1": {
+      "model": "backrooms:block/concretes/cracking_concrete_1"
+    },
+    "stage=2": {
+      "model": "backrooms:block/concretes/cracking_concrete_2"
+    }
+  }
+}

@@ -9,10 +9,10 @@
   "has_ceiling": false,
   "fixed_time":18000,
   "coordinate_scale": 1,
-  "ambient_light": -0.05,
+  "ambient_light": -0.0,
   "logical_height": 90,
   "infiniburn": "#minecraft:infiniburn_overworld",
   "min_y": -32,
-  "height": 128,
+  "height": 160,
   "effects": "minecraft:nether"
 }

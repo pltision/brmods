@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-
+@Deprecated
 public class Level1GeneratorDataBlock extends BarrierBlock implements EntityBlock {
     public Level1GeneratorDataBlock(Properties p_49092_) {
         super(p_49092_);

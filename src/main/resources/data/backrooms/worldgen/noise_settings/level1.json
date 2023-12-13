@@ -5,14 +5,14 @@
   "ore_veins_enabled": true,
   "legacy_random_source": false,
   "default_block": {
-    "Name": "backrooms:normal/concrete"
+    "Name": "backrooms:concrete"
   },
   "default_fluid": {
     "Name": "minecraft:air"
   },
   "noise": {
     "min_y": -32,
-    "height": 128,
+    "height": 160,
     "size_horizontal": 1,
     "size_vertical": 2,
     "sampling": {
@@ -62,7 +62,7 @@
         "if_true": {
           "type": "minecraft:y_above",
           "anchor": {
-            "absolute": 94
+            "absolute": 158
           },
           "surface_depth_multiplier": 0,
           "add_stone_depth": false

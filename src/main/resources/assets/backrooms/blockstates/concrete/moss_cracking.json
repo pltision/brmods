@@ -1,0 +1,26 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "stage": "1",
+        "water": "dry1|dry2|dry3|healthy|wet1|wet2|wet3"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/concretes/moss_cracking_concrete_1"
+        }
+      ]
+    },
+    {
+      "when": {
+        "stage": "2",
+        "water": "dry1|dry2|dry3|healthy|wet1|wet2|wet3"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/concretes/moss_cracking_concrete_2"
+        }
+      ]
+    }
+  ]
+}

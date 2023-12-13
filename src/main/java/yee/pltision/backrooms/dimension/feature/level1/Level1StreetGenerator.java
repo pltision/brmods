@@ -15,15 +15,13 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import org.jetbrains.annotations.NotNull;
-import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.level1.generator.Level1GeneratorDataEntity;
 import yee.pltision.backrooms.dimension.densityfunctioncontext.DeviationableFunctionContext;
 
 import java.util.List;
-import java.util.Random;
 
-import static yee.pltision.backrooms.dimension.BackroomsFunction.*;
-import static yee.pltision.backrooms.dimension.feature.level1.Level1SquareGenerator.fill;
+import static yee.pltision.backrooms.dimension.BackroomsFunction.LEVEL1_TOP;
+import static yee.pltision.backrooms.dimension.BackroomsFunction.STREET_NOISE;
+import static yee.pltision.backrooms.dimension.feature.level1.Level1ColumnFeature.fill;
 
 public class Level1StreetGenerator extends Feature<NoneFeatureConfiguration> {
     public Level1StreetGenerator() {

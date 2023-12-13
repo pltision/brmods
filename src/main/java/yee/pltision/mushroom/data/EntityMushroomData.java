@@ -1,22 +1,17 @@
 package yee.pltision.mushroom.data;
 
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 import yee.pltision.Util;
 import yee.pltision.mushroom.mc.MushroomMobEffects;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 public class EntityMushroomData implements Serializable {
     public HashMap<Long,MushroomEffect> effects;
-    public double dry=0.1;
+    public double wet =0.1;
     public final double defaultTemplate=36.5;
     public double temperature=defaultTemplate;
     final public double immunity=0.0035;

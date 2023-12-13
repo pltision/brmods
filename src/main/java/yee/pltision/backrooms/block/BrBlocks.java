@@ -15,7 +15,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BarrierBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -33,17 +32,15 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.Util;
-import yee.pltision.backrooms.block.concrete.ConcreteBlock;
-import yee.pltision.backrooms.block.concrete.ConcreteRubbleBlock;
-import yee.pltision.backrooms.block.concrete.CrackingConcreteBlock;
-import yee.pltision.backrooms.block.normal.XZLight;
-import yee.pltision.backrooms.block.normal.WallLight;
-import yee.pltision.backrooms.block.level1.generator.Level1GeneratorDataBlock;
+import yee.pltision.backrooms.block.concrete.*;
 import yee.pltision.backrooms.block.lootblock.EmptyShelfBlock;
 import yee.pltision.backrooms.block.lootblock.StackableShelfBlock;
+import yee.pltision.backrooms.block.moss.BrMossCarpetBlock;
 import yee.pltision.backrooms.block.mushroom.BrMushroomBlock;
 import yee.pltision.backrooms.block.mushroom.BrMyceliumBlock;
 import yee.pltision.backrooms.block.mushroom.MushroomItem;
+import yee.pltision.backrooms.block.normal.WallLight;
+import yee.pltision.backrooms.block.normal.XZLight;
 import yee.pltision.backrooms.block.type.BackroomsHardBlock;
 
 import java.util.ArrayList;
@@ -108,12 +105,13 @@ public class BrBlocks {
                 );
     }
 
-    @Mod.EventBusSubscriber
     public static class Level1 {
-        public static final RegistryObject<Block> GENERATOR_DATA_BLOCK = REGISTER.register("level1/generator_data_block", () ->
-                new Level1GeneratorDataBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
-        public static final RegistryObject<Block> GENERATED_BLOCK = REGISTER.register("level1/generated_block", () ->
-                new BarrierBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
+//        @Deprecated
+//        public static final RegistryObject<Block> GENERATOR_DATA_BLOCK = REGISTER.register("level1/generator_data_block", () ->
+//                new Level1GeneratorDataBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
+//        @Deprecated
+//        public static final RegistryObject<Block> GENERATED_BLOCK = REGISTER.register("level1/generated_block", () ->
+//                new BarrierBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()));
     }
 
     public static final RegistryObject<Block> WOODEN_TABLE=
@@ -202,9 +200,9 @@ public class BrBlocks {
 
     @Mod.EventBusSubscriber
     public static class Normal{
-        public static final RegistryObject<Block> CONCRETE=REGISTER.register("normal/concrete",()->
+        @Deprecated public static final RegistryObject<Block> CONCRETE=REGISTER.register("normal/concrete",()->
                 new BackroomsHardBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.BLACK).requiresCorrectToolForDrops().strength(5F,14F)));
-        public static final RegistryObject<Block> WHITE_CONCRETE =REGISTER.register("normal/white_concrete",()->
+        @Deprecated public static final RegistryObject<Block> WHITE_CONCRETE =REGISTER.register("normal/white_concrete",()->
                 new BackroomsHardBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.WHITE).requiresCorrectToolForDrops().strength(5F,14F)));
         public static final RegistryObject<Block> WALL_LIGHT =REGISTER.register("normal/wall_light",()->new WallLight(
                 BlockBehaviour.Properties.of(Material.DECORATION).lightLevel((p_187435_) -> 15).requiresCorrectToolForDrops().strength(1F, 10.0F).noOcclusion().sound(SoundType.STONE)
@@ -218,9 +216,9 @@ public class BrBlocks {
             }
         });
 
-        public static final RegistryObject<Item> CONCRETE_ITEM =
+        @Deprecated public static final RegistryObject<Item> CONCRETE_ITEM =
                 ITEM_REGISTER.register("normal/concrete",()-> new BlockItem(CONCRETE.get(),new Item.Properties()));
-        public static final RegistryObject<Item> WHITE_CONCRETE_ITEM =
+        @Deprecated public static final RegistryObject<Item> WHITE_CONCRETE_ITEM =
                 ITEM_REGISTER.register("normal/white_concrete",()-> new BlockItem(WHITE_CONCRETE.get(),new Item.Properties()));
         public static final RegistryObject<Item> WALL_LIGHT_ITEM =
                 ITEM_REGISTER.register("normal/wall_light",()-> new BlockItem(WALL_LIGHT.get(),new Item.Properties()));
@@ -232,21 +230,39 @@ public class BrBlocks {
     @Mod.EventBusSubscriber
     public static class Concretes{
         public static final RegistryObject<Block> CONCRETE=REGISTER.register("concrete",()->
-                new ConcreteBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.BLACK).requiresCorrectToolForDrops().strength(5.5F,14F)));
+                new ConcreteBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(5.5F,14F)));
+        public static final RegistryObject<Block> SEEPING_CONCRETE=REGISTER.register("concrete/seeping",()->
+                new SeepingConcreteBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(5.5F,14F).randomTicks()));
+
         public static final RegistryObject<Block> CRACKING_CONCRETE=REGISTER.register("concrete/cracking",()->
-                new CrackingConcreteBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.BLACK).requiresCorrectToolForDrops().strength(5F,13F)));
+                new CrackingConcreteBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(5F,13F).randomTicks()));
+        public static final RegistryObject<Block> MOSS_CRACKING_CONCRETE=REGISTER.register("concrete/moss_cracking",()->
+                new MossCrackingConcreteBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(5F,13F).randomTicks()));
+
         public static final RegistryObject<Block> CONCRETE_RUBBLE =REGISTER.register("concrete_rubble",()->
-                new ConcreteRubbleBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.BLACK).requiresCorrectToolForDrops().strength(3F,13F)));
+                new ConcreteRubbleBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(3F,13F)));
+        public static final RegistryObject<Block> MOSS_CONCRETE_RUBBLE =REGISTER.register("concrete_rubble/moss",()->
+                new MossConcreteRubbleBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(3.5F,13F).randomTicks()));
 
         public static final RegistryObject<Block> WHITE_CONCRETE =REGISTER.register("white_concrete",()->
                 new BackroomsHardBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.WHITE).requiresCorrectToolForDrops().strength(5F,15F)));
 
         public static final RegistryObject<Item> CONCRETE_ITEM =
                 ITEM_REGISTER.register("concrete",()-> new BlockItem(CONCRETE.get(),new Item.Properties()));
-        public static final RegistryObject<Item> CRACKED_CONCRETE_ITEM =
+        public static final RegistryObject<Item> CONCRETE_RUBBLE_ITEM =
                 ITEM_REGISTER.register("concrete_rubble",()-> new BlockItem(CONCRETE_RUBBLE.get(),new Item.Properties()));
         public static final RegistryObject<Item> WHITE_CONCRETE_ITEM =
                 ITEM_REGISTER.register("white_concrete",()-> new BlockItem(WHITE_CONCRETE.get(),new Item.Properties()));
+    }
+
+    @Mod.EventBusSubscriber
+    public static class Mosses{
+        public static final RegistryObject<Block> MOSS_CARPET=REGISTER.register("moss_carpet",()->
+                new BrMossCarpetBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_GREEN).strength(0.1F).sound(SoundType.MOSS_CARPET).randomTicks()));
+
+        public static final RegistryObject<Item> MOSS_CARPET_ITEM =
+                ITEM_REGISTER.register("moss_carpet",()-> new BlockItem(MOSS_CARPET.get(),new Item.Properties()));
+
     }
 
     @Mod.EventBusSubscriber

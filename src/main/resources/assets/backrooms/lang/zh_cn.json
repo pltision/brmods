@@ -7,5 +7,12 @@
   "block.backrooms.level0.mycelium": "菌丝",
   "item.backrooms.loot_items.canned_carrots": "胡萝卜罐头",
   "block.backrooms.shelf.wooden": "架子",
-  "block.backrooms.shelf.wooden.item.canned_carrots": "带有胡萝卜罐头的架子"
+  "block.backrooms.shelf.wooden.item.canned_carrots": "带有胡萝卜罐头的架子",
+  "block.backrooms.concrete": "水泥",
+  "block.backrooms.concrete.cracking": "破损水泥",
+  "block.backrooms.concrete.seeping": "渗水水泥",
+  "block.backrooms.concrete_rubble": "碎水泥",
+  "block.backrooms.white_concrete": "白水泥",
+  "block.backrooms.normal.wall_light": "侧灯",
+  "block.backrooms.normal.top_lamp": "灯"
 }

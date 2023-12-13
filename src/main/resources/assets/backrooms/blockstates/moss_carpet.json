@@ -1,0 +1,14 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "water": "dry1|dry2|dry3|healthy|wet1|wet2|wet3"
+      },
+      "apply": [
+        {
+          "model":"minecraft:block/moss_carpet"
+        }
+      ]
+    }
+  ]
+}

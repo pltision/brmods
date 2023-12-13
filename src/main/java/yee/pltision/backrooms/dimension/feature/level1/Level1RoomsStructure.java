@@ -6,33 +6,24 @@ import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.entity.JigsawBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraftforge.accesstransformer.generated.AtParser;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
 import yee.pltision.backrooms.dimension.BackroomsFunction;
-import yee.pltision.backrooms.dimension.densityfunctioncontext.CFunctionContext;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import static yee.pltision.backrooms.dimension.BackroomsFunction.COLUMN_NOISE;
-import static yee.pltision.backrooms.dimension.BackroomsFunction.LEVEL1_MINABLE_TOP;
-import static yee.pltision.backrooms.dimension.feature.level1.Level1SquareGenerator.fill;
 
 
 public class Level1RoomsStructure extends Feature<NoneFeatureConfiguration> {
@@ -65,7 +56,7 @@ public class Level1RoomsStructure extends Feature<NoneFeatureConfiguration> {
 
         WorldGenLevel level=c.level();
 
-        BlockState concrete=BrBlocks.Normal.CONCRETE.get().defaultBlockState();
+        BlockState concrete=BrBlocks.Concretes.CONCRETE.get().defaultBlockState();
 
         for(;y<BackroomsFunction.Level1BlockFunction.MAIN_LAYOUT_END;y++){
             BlockState block=level.getBlockState(new BlockPos(x,y,z));

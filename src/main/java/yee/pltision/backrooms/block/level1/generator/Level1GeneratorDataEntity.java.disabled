@@ -10,7 +10,8 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
 
-@Mod.EventBusSubscriber
+
+@Deprecated
 public class Level1GeneratorDataEntity extends BlockEntity {
     @SuppressWarnings("ConstantConditions")
     public static final RegistryObject<BlockEntityType<Level1GeneratorDataEntity>> MYCELIUM_BLOCK_ENTITY_TYPE =
