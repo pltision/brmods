@@ -2,6 +2,7 @@ package yee.pltision.backrooms.block.moss;
 
 import com.google.common.collect.HashBiMap;
 import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public enum MossState implements StringRepresentable {
@@ -33,7 +34,7 @@ public enum MossState implements StringRepresentable {
     }
 
     @Override
-    public String getSerializedName() {
+    public @NotNull String getSerializedName() {
         return name;
     }
 }

@@ -41,7 +41,7 @@ public class BackroomsFunction {
     Codec<Double> NOISE_VALUE_CODEC = Codec.doubleRange(-1000000.0D, 1000000.0D);
 
     public static final int BASE_HEIGHT=49;
-    public static final int LEVEL1_TOP=158;
+    public static final int LEVEL1_TOP=126;
     public static final int LEVEL1_MINABLE_TOP =93;
     public static final int LEVEL1_MINABLE_BOTTOM =-31;
     public static final int LEVEL1_HEIGHT=6;

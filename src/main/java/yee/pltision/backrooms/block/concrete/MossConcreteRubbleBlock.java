@@ -9,12 +9,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
+import yee.pltision.backrooms.block.farmland.IWaterBlock;
 import yee.pltision.backrooms.block.moss.Moss;
 import yee.pltision.backrooms.block.moss.MossState;
 
 import java.util.Random;
 
-public class MossConcreteRubbleBlock extends ConcreteRubbleBlock implements Moss {
+public class MossConcreteRubbleBlock extends ConcreteRubbleBlock implements Moss, IWaterBlock {
     public MossConcreteRubbleBlock(Properties p_49795_) {
         super(p_49795_);
         registerDefaultState(defaultBlockState().setValue(WATER, MossState.HEALTHY));
@@ -39,5 +40,10 @@ public class MossConcreteRubbleBlock extends ConcreteRubbleBlock implements Moss
     }
     public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull Random random){
         Moss.super.randomTick(state,level,pos,random);
+    }
+
+    @Override
+    public double getWater() {
+        return 0.05;
     }
 }

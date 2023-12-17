@@ -1,43 +1,14 @@
 package yee.pltision.backrooms.dimension;
 
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
-import com.mojang.datafixers.util.Pair;
-import joptsimple.internal.AbbreviationMap;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.Pools;
-import net.minecraft.data.worldgen.ProcessorLists;
-import net.minecraft.data.worldgen.StructureFeatures;
-import net.minecraft.data.worldgen.TaigaVillagePools;
-import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BiomeTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.*;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.structure.BuiltinStructureSets;
-import net.minecraft.world.level.levelgen.structure.StructureSet;
-import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
-import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
-import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
-import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
-import net.minecraft.world.level.levelgen.structure.templatesystem.*;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -47,12 +18,8 @@ import yee.pltision.backrooms.dimension.feature.TestFeature;
 import yee.pltision.backrooms.dimension.feature.level0.*;
 import yee.pltision.backrooms.dimension.feature.level1.*;
 
-import java.net.PortUnreachableException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 
@@ -115,6 +82,10 @@ public class FeatureAppends {
 //    public static final RegistryObject<Feature<?>> LEVEL1_ROOMS=registry("level1/rooms", Level1RoomsStructure::feature,
 //            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level1/square")),GenerationStep.Decoration.UNDERGROUND_STRUCTURES,Level1RoomsStructure::placedFeature)
 //    );
+
+    public static final RegistryObject<Feature<?>> LEVEL1_WATER=registry("level1/water", Level1WaterFeature::feature,
+            new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:level1/square")),GenerationStep.Decoration.LAKES, Level1WaterFeature::placedFeature)
+    );
 
     public static final RegistryObject<Feature<?>> FUNCTION_TEST=registry("test_feature", TestFeature::feature,
             new FeatureGenerationData(Set.of(new ResourceLocation("backrooms:test")), TestFeature::placedFeature)

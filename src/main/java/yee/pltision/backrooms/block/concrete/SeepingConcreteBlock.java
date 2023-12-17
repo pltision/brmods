@@ -37,11 +37,11 @@ public class SeepingConcreteBlock extends ConcreteBlock implements IWaterBlock,I
 
     ///fill ~-10 ~-1 ~-10 ~10 ~-1 ~10 backrooms:concrete/seeping
     @Override
-    public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, BlockPos pos, @NotNull Random random) {
-        int x=pos.getX(),y=pos.getY(),z=pos.getZ();
+    public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull Random random) {
 //        System.out.println("yee");
         if((random.nextInt()&0b11)==0) {
 //            System.out.println("yee");
+            int x=pos.getX(),y=pos.getY(),z=pos.getZ();
             double dry=IFarmland.randomUpToDownWet(1, level, pos);
             if(dry<0.5){
                 //System.out.println(dry);

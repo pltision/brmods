@@ -1,0 +1,134 @@
+{
+  "multipart": [
+    {
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/c"
+        }
+      ]
+    },
+
+
+    {
+      "when": {
+        "north": "connect|open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/n"
+        }
+      ]
+    },
+    {
+      "when": {
+        "south": "connect|open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/s"
+        }
+      ]
+    },
+    {
+      "when": {
+        "west": "connect|open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/w"
+        }
+      ]
+    },
+    {
+      "when": {
+        "east": "connect|open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/e"
+        }
+      ]
+    },
+    {
+      "when": {
+        "up": "connect|open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/u"
+        }
+      ]
+    },
+    {
+      "when": {
+        "down": "connect|open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/d"
+        }
+      ]
+    },
+
+    {
+      "when": {
+        "north": "open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/no"
+        }
+      ]
+    },
+    {
+      "when": {
+        "south": "open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/so"
+        }
+      ]
+    },
+    {
+      "when": {
+        "west": "open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/wo"
+        }
+      ]
+    },
+    {
+      "when": {
+        "east": "open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/eo"
+        }
+      ]
+    },
+    {
+      "when": {
+        "up": "open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/uo"
+        }
+      ]
+    },
+    {
+      "when": {
+        "down": "open"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/do"
+        }
+      ]
+    }
+  ]
+}

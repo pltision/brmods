@@ -84,7 +84,7 @@ public interface IFarmland {
                     x+RANDOM.nextInt()%2,
                     y+RANDOM.nextInt()%3+1,
                     z+RANDOM.nextInt()%2)
-            ))*P1_RANDOM_FACTOR;
+            ));
         }
         if(!level.getBlockState(pos.above()).getMaterial().isSolid()){
             int i=1;
@@ -94,18 +94,20 @@ public interface IFarmland {
             }
             if(i!=11){
                 //第二点
-                sum*=1/2D;//稀释第一个点
+                //sum*=1/2D;//稀释第一个点
                 y+=i;
                 for(i=0;i<10;i++){  //第二点的随机
                     sum+= getBlockWet(level.getBlockState(new BlockPos(
                             x+RANDOM.nextInt()%3,
                             y+RANDOM.nextInt()%3,
                             z+RANDOM.nextInt()%3)
-                    ))*P2_RANDOM_FACTOR;
+                    ));
                 }
+                return base/Math.log(20/8D+1)*Math.log(sum+1)* biomeWetFactor(level,pos);
             }
         }
-        return base*Math.log(sum+1)* biomeWetFactor(level,pos);
+
+        return base/Math.log(10/8D+1)*Math.log(sum+1)* biomeWetFactor(level,pos);
     }
 
     double randomPlaneWet_CEXP=Math.log(20/8D+1);

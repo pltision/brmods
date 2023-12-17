@@ -58,6 +58,4 @@ public class MossCrackingConcreteBlock extends CrackingConcreteBlock implements 
                 BrBlocks.Concretes.MOSS_CONCRETE_RUBBLE.get().defaultBlockState():
                 old.setValue(STAGE,stage+1);
     }
-
-
 }

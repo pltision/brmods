@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
@@ -41,6 +42,8 @@ import yee.pltision.backrooms.block.mushroom.BrMyceliumBlock;
 import yee.pltision.backrooms.block.mushroom.MushroomItem;
 import yee.pltision.backrooms.block.normal.WallLight;
 import yee.pltision.backrooms.block.normal.XZLight;
+import yee.pltision.backrooms.block.pipe.FakeLiquidBlock;
+import yee.pltision.backrooms.block.pipe.ComplexPipeBlock;
 import yee.pltision.backrooms.block.type.BackroomsHardBlock;
 
 import java.util.ArrayList;
@@ -48,6 +51,7 @@ import java.util.ArrayList;
 @SuppressWarnings("unused")
 public class BrBlocks {
     public static final DeferredRegister<Block> REGISTER=DeferredRegister.create(ForgeRegistries.BLOCKS, Util.MODID);
+    public static final DeferredRegister<Fluid> FLUID_REGISTER=DeferredRegister.create(ForgeRegistries.FLUIDS, Util.MODID);
     public static final DeferredRegister<Item> ITEM_REGISTER=DeferredRegister.create(ForgeRegistries.ITEMS, Util.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_REGISTER=DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Util.MODID);
 
@@ -263,6 +267,19 @@ public class BrBlocks {
         public static final RegistryObject<Item> MOSS_CARPET_ITEM =
                 ITEM_REGISTER.register("moss_carpet",()-> new BlockItem(MOSS_CARPET.get(),new Item.Properties()));
 
+    }
+
+    @Mod.EventBusSubscriber
+    public static class Pipes{
+        @Deprecated
+        public static final RegistryObject<Block> IRON_PIPE=REGISTER.register("pipe/iron",()->
+                new ComplexPipeBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(3F,10F).noOcclusion()));
+        public static final RegistryObject<Block> FAKE_LIQUID =REGISTER.register("fake_liquid",()->
+                new FakeLiquidBlock( BlockBehaviour.Properties.of(Material.WATER_PLANT).noCollission().strength(100.0F).noDrops()));
+
+        @Deprecated
+        public static final RegistryObject<Item> IRON_PIPE_ITEM =
+                ITEM_REGISTER.register("pipe/iron",()-> new BlockItem(IRON_PIPE.get(),new Item.Properties()));
     }
 
     @Mod.EventBusSubscriber
