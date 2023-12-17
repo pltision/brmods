@@ -118,17 +118,7 @@ public interface ComplexPipe extends Pipe{
         }
     }
     static void tryPlaceLiquid(BlockState state,Level level,BlockPos pos){
-        if(state.getValue(LIQUID)!=PipeLiquidState.NONE){
-            int l=state.getValue(LEVEL)>>1;
-            if(l>0){
-                PipeLiquidState liquid=state.getValue(LIQUID);
-                for(Direction direction:Direction.values()){
-                    BlockPos place= pos.relative(direction);
-                    liquid.placeFunction.place(l,direction,state,level,pos);
-                }
-            }
-        }
-/*        BlockState liquid=null;
+        BlockState liquid=null;
         switch (state.getValue(LIQUID)){
             case NONE -> {
                 //liquid=null;
@@ -157,7 +147,7 @@ public interface ComplexPipe extends Pipe{
 
                 }
             }
-        }*/
+        }
     }
 
     default void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos changePos, boolean p_54714_) {
@@ -208,8 +198,7 @@ public interface ComplexPipe extends Pipe{
     }
 
     @Override
-    default boolean canConnect(BlockState state, Direction face) {
+    default boolean canConnect(BlockState state, Direction face){
         return state.getValue(getPropertyFromDirection(face))==CONNECT;
     }
-
 }
