@@ -70,7 +70,7 @@ public class FakeLiquidBlock extends AirBlock implements EntityBlock {
                     if(entity.neighbors[it]!=thisLevel){
                         entity.neighbors[it]=thisLevel;
                         noChange=false;
-                        System.out.println(thisLevel);
+//                        System.out.println(thisLevel);
                     }
                     it++;
                 }
@@ -80,9 +80,7 @@ public class FakeLiquidBlock extends AirBlock implements EntityBlock {
                 }
             }
 
-            if (t.getBlock() instanceof ComplexPipe &&
-                    t.getValue(ComplexPipe.getPropertyFromDirection(direction.getOpposite())) == ConnectState.OPEN &&
-                    t.getValue(ComplexPipe.LIQUID) == state.getValue(ComplexPipe.LIQUID)) {
+            if (t.getBlock() instanceof Pipe pipe&& pipe.isConnected(t,direction.getOpposite())&&t.getValue(Pipe.LIQUID)==state.getValue(Pipe.LIQUID)) {
 //                System.out.println(""+t+pos.relative(direction)+direction);
                 doClear=false;
             }
@@ -118,7 +116,7 @@ public class FakeLiquidBlock extends AirBlock implements EntityBlock {
     @Override
     protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> p_49915_) {
         super.createBlockStateDefinition(p_49915_);
-        p_49915_.add(ComplexPipe.LIQUID);
+        p_49915_.add(Pipe.LIQUID);
         p_49915_.add(BLOCKING);
         p_49915_.add(LiquidBlock.LEVEL);
     }
@@ -126,11 +124,11 @@ public class FakeLiquidBlock extends AirBlock implements EntityBlock {
     @Override
     public @NotNull FluidState getFluidState(@NotNull BlockState state) {
         if(state.getValue(BLOCKING)){
-            Fluid fluid=state.getValue(ComplexPipe.LIQUID).fluid;
+            Fluid fluid=state.getValue(Pipe.LIQUID).fluid;
             if(fluid.defaultFluidState().hasProperty(FlowingFluid.LEVEL))return fluid.defaultFluidState().setValue(FlowingFluid.LEVEL,1);
         }
         else {
-            Fluid fluid=state.getValue(ComplexPipe.LIQUID).fluid;
+            Fluid fluid=state.getValue(Pipe.LIQUID).fluid;
             int level=state.getValue(LiquidBlock.LEVEL);
             if(level<1) level=1;
             else if(level>8)level=8;

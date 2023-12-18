@@ -1,0 +1,73 @@
+{
+  "multipart": [
+    {
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/cross/c"
+        }
+      ]
+    },
+
+
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/cross/n"
+        }
+      ]
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/cross/s"
+        }
+      ]
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/cross/w"
+        }
+      ]
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/cross/e"
+        }
+      ]
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/cross/u"
+        }
+      ]
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/cross/d"
+        }
+      ]
+    }
+  ]
+}

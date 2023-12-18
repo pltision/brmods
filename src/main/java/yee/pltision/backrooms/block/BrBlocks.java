@@ -42,8 +42,9 @@ import yee.pltision.backrooms.block.mushroom.BrMyceliumBlock;
 import yee.pltision.backrooms.block.mushroom.MushroomItem;
 import yee.pltision.backrooms.block.normal.WallLight;
 import yee.pltision.backrooms.block.normal.XZLight;
+import yee.pltision.backrooms.block.pipe.AxisPipeBlock;
+import yee.pltision.backrooms.block.pipe.CrossPipeBlock;
 import yee.pltision.backrooms.block.pipe.FakeLiquidBlock;
-import yee.pltision.backrooms.block.pipe.ComplexPipeBlock;
 import yee.pltision.backrooms.block.type.BackroomsHardBlock;
 
 import java.util.ArrayList;
@@ -271,15 +272,23 @@ public class BrBlocks {
 
     @Mod.EventBusSubscriber
     public static class Pipes{
-        @Deprecated
-        public static final RegistryObject<Block> IRON_PIPE=REGISTER.register("pipe/iron",()->
-                new ComplexPipeBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(3F,10F).noOcclusion()));
+//        @Deprecated
+//        public static final RegistryObject<Block> IRON_PIPE=REGISTER.register("pipe/iron",()->
+//                new ComplexPipeBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(3F,10F).noOcclusion()));
+        public static final RegistryObject<Block> IRON_PIPE_AXIS =REGISTER.register("pipe/iron/axis",()->
+                new AxisPipeBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(3F,10F).noOcclusion()));
+        public static final RegistryObject<Block> IRON_PIPE_CROSS =REGISTER.register("pipe/iron/cross",()->
+                new CrossPipeBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(3F,10F).noOcclusion()));
         public static final RegistryObject<Block> FAKE_LIQUID =REGISTER.register("fake_liquid",()->
                 new FakeLiquidBlock( BlockBehaviour.Properties.of(Material.WATER_PLANT).noCollission().strength(100.0F).noDrops()));
 
-        @Deprecated
+//        @Deprecated
+//        public static final RegistryObject<Item> IRON_PIPE_ITEM =
+//                ITEM_REGISTER.register("pipe/iron",()-> new BlockItem(IRON_PIPE.get(),new Item.Properties()));
         public static final RegistryObject<Item> IRON_PIPE_ITEM =
-                ITEM_REGISTER.register("pipe/iron",()-> new BlockItem(IRON_PIPE.get(),new Item.Properties()));
+                ITEM_REGISTER.register("pipe/iron/axis",()-> new BlockItem(IRON_PIPE_AXIS.get(),new Item.Properties()));
+        public static final RegistryObject<Item> IRON_PIPE_CROSS_ITEM =
+                ITEM_REGISTER.register("pipe/iron/cross",()-> new BlockItem(IRON_PIPE_CROSS.get(),new Item.Properties()));
     }
 
     @Mod.EventBusSubscriber
@@ -295,6 +304,7 @@ public class BrBlocks {
                         }
                 );
     }
+
 
 
 }

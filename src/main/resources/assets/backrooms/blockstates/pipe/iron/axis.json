@@ -1,0 +1,108 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "axis": "x"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/axis/c",
+          "y": 90
+        }
+      ]
+    },
+    {
+      "when": {
+        "axis": "y"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/axis/c",
+          "x": 90
+        }
+      ]
+    },
+    {
+      "when": {
+        "axis": "z"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/axis/c"
+        }
+      ]
+    },
+
+    {
+      "when": {
+        "axis": "x",
+        "p": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/axis/n",
+          "y": 90
+        }
+      ]
+    },
+    {
+      "when": {
+        "axis": "y",
+        "p": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/axis/p",
+          "x": 90
+        }
+      ]
+    },
+    {
+      "when": {
+        "axis": "z",
+        "p": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/axis/p"
+        }
+      ]
+    },
+
+    {
+      "when": {
+        "axis": "x",
+        "n": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/axis/p",
+          "y": 90
+        }
+      ]
+    },
+    {
+      "when": {
+        "axis": "y",
+        "n": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/axis/n",
+          "x": 90
+        }
+      ]
+    },
+    {
+      "when": {
+        "axis": "z",
+        "n": "true"
+      },
+      "apply": [
+        {
+          "model":"backrooms:block/pipes/iron/axis/n"
+        }
+      ]
+    }
+  ]
+}

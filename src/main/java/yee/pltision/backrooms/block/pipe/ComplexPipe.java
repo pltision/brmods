@@ -8,11 +8,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.jetbrains.annotations.NotNull;
-import yee.pltision.backrooms.block.BrBlocks;
 
 import java.util.Random;
 
@@ -28,7 +25,6 @@ public interface ComplexPipe extends Pipe{
                                 DOWN=EnumProperty.create("down",ConnectState.class);
 //    EnumProperty<PipeLiquidState> LIQUID=Pipe.LIQUID;
 //    DirectionProperty FROM = Pipe.FROM;
-    IntegerProperty LEVEL=IntegerProperty.create("level",0,32);
 
 
     default void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
@@ -41,7 +37,6 @@ public interface ComplexPipe extends Pipe{
         builder.add(DOWN);
 //        builder.add(LIQUID);
 //        builder.add(FROM);
-        builder.add(LEVEL);
     }
     static BlockState toDefaultState(BlockState state){
         return state.setValue(EAST, NONE)
@@ -61,14 +56,18 @@ public interface ComplexPipe extends Pipe{
                     return state.setValue(LIQUID, t.getValue(LIQUID)).setValue(LEVEL, t.getValue(LEVEL) - 1);
                 }
             }
-            else if(t.getBlock()instanceof LiquidBlock liquid&&
-                    !(t.getBlock() instanceof FakeLiquidBlock)/*&&
-                    liquid.getFluid().isSame(state.getValue(LIQUID).fluid)*/){
+            else{
+                int l=state.getValue(LIQUID).sourceFunction.sourceLevel(t,level,pos);
+                if(l>0) state.setValue(LEVEL,l);
+            }
+            /*else if(t.getBlock()instanceof LiquidBlock liquid&&
+                    !(t.getBlock() instanceof FakeLiquidBlock)*//*&&
+                    liquid.getFluid().isSame(state.getValue(LIQUID).fluid)*//*){
                 int l=t.getValue(LiquidBlock.LEVEL);
                 if(l<1)return state.setValue(LEVEL,(9<<1)-2);
                 l=(l<<1)-2;
                 if(l>0) return state.setValue(LEVEL, l);
-            }
+            }*/
             return state.setValue(LIQUID,PipeLiquidState.NONE);
         }
         for(Direction direction:Direction.values()) {
@@ -94,16 +93,20 @@ public interface ComplexPipe extends Pipe{
         }
         else if(state.getValue(getPropertyFromDirection(face))==OPEN){
             t=level.getBlockState(pos.relative(face));
-            if(t.getBlock() instanceof LiquidBlock liquid){
+            for(PipeLiquidState liquidState:PipeLiquidState.values()){
+                int l=liquidState.sourceFunction.sourceLevel(t,level,pos);
+                if(l>0) return state.setValue(LEVEL,l).setValue(LIQUID,liquidState);
+            }
+            /*if(t.getBlock() instanceof LiquidBlock liquid){
                 int l=t.getValue(LiquidBlock.LEVEL);
                 if(l<1)return state.setValue(LIQUID,PipeLiquidState.WATER).setValue(FROM,face).setValue(LEVEL,(9<<1)-2);
                 l=(l<<1)-2;
                 if(l>0) return state.setValue(LIQUID,PipeLiquidState.WATER).setValue(FROM,face).setValue(LEVEL,l);
-            }
+            }*/
         }
         return null;
     }
-    static void updateNeighbor(BlockState state,LevelAccessor level,BlockPos pos){
+    default void updateNeighbors(BlockState state, Level level,BlockPos pos){
         Direction from=state.getValue(FROM);
 //        PipeLiquidState liquid=state.getValue(LIQUID);
         for(Direction direction:Direction.values()) {
@@ -117,8 +120,20 @@ public interface ComplexPipe extends Pipe{
             }
         }
     }
-    static void tryPlaceLiquid(BlockState state,Level level,BlockPos pos){
-        BlockState liquid=null;
+    default void placeLiquid(BlockState state, Level level, BlockPos pos){
+        if(state.getValue(LIQUID)!=PipeLiquidState.NONE){
+            int l=state.getValue(LEVEL)>>1;
+            if(l>0){
+                PipeLiquidState liquid=state.getValue(LIQUID);
+                for(Direction direction:Direction.values()){
+                    if(state.getValue(getPropertyFromDirection(direction))==OPEN) {
+                        BlockPos place = pos.relative(direction);
+                        liquid.placeFunction.place(l, direction, state, level, place);
+                    }
+                }
+            }
+        }
+        /*BlockState liquid=null;
         switch (state.getValue(LIQUID)){
             case NONE -> {
                 //liquid=null;
@@ -147,7 +162,7 @@ public interface ComplexPipe extends Pipe{
 
                 }
             }
-        }
+        }*/
     }
 
     default void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos changePos, boolean p_54714_) {
@@ -169,8 +184,8 @@ public interface ComplexPipe extends Pipe{
     }
     default void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         BlockState t= updateLiquid(state,level,pos);
-        updateNeighbor(t,level,pos);
-        tryPlaceLiquid(t,level,pos);
+        updateNeighbors(t,level,pos);
+        placeLiquid(t,level,pos);
         if(t!=state) level.setBlock(pos,t,3);
     }
     static EnumProperty<ConnectState> getPropertyFromDirection(Direction direction){
@@ -198,7 +213,13 @@ public interface ComplexPipe extends Pipe{
     }
 
     @Override
-    default boolean canConnect(BlockState state, Direction face){
-        return state.getValue(getPropertyFromDirection(face))==CONNECT;
+    default boolean isConnected(BlockState state, Direction face){
+        ConnectState connectState= state.getValue(getPropertyFromDirection(face));
+        return connectState==CONNECT||connectState==OPEN;
+    }
+    @Override
+    default boolean isOpen(BlockState state, Direction face){
+        ConnectState connectState= state.getValue(getPropertyFromDirection(face));
+        return connectState==OPEN;
     }
 }

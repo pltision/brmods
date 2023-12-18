@@ -26,7 +26,7 @@ public class XZLight extends BackroomsLightBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_54935_) {
         p_54935_.add(AXIS);
     }
-    public BlockState rotate(@NotNull BlockState p_55930_, @NotNull Rotation p_55931_) {
+    public @NotNull BlockState rotate(@NotNull BlockState p_55930_, @NotNull Rotation p_55931_) {
         return rotatePillar(p_55930_, p_55931_);
     }
 
@@ -48,8 +48,5 @@ public class XZLight extends BackroomsLightBlock {
         }
     }
 
-    @Override
-    public void tick(BlockState p_60462_, ServerLevel p_60463_, BlockPos p_60464_, Random p_60465_) {
-        super.tick(p_60462_, p_60463_, p_60464_, p_60465_);
-    }
+
 }

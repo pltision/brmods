@@ -21,6 +21,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -57,17 +58,17 @@ public class BrMushroomBlock extends BushBlock implements EntityBlock, IPlantabl
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos p_153215_, @NotNull BlockState p_153216_) {
         return new MyceliumBlockEntity(p_153215_,p_153216_);
     }
-    public boolean canSurvive(BlockState p_54880_, LevelReader p_54881_, BlockPos p_54882_) {
+    public boolean canSurvive(@NotNull BlockState p_54880_, LevelReader p_54881_, BlockPos p_54882_) {
         BlockPos blockpos = p_54882_.below();
         BlockState blockstate = p_54881_.getBlockState(blockpos);
         return blockstate.canSustainPlant(p_54881_, blockpos, net.minecraft.core.Direction.UP, this);
     }
 
 
-    protected boolean mayPlaceOn(BlockState p_54894_, BlockGetter p_54895_, BlockPos p_54896_) {
+    protected boolean mayPlaceOn(BlockState p_54894_, @NotNull BlockGetter p_54895_, @NotNull BlockPos p_54896_) {
         return p_54894_.isSolidRender(p_54895_, p_54896_);
     }
 
