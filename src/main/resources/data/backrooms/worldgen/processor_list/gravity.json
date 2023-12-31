@@ -1,0 +1,10 @@
+{
+    "processors": [
+        {
+            "processor_type": "gravity",
+            "rules":[],
+            "heightmap": "MOTION_BLOCKING",
+            "offset": 0
+        }
+    ]
+}

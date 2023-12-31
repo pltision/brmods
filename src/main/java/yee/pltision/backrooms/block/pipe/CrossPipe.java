@@ -24,7 +24,7 @@ public interface CrossPipe extends Pipe {
 
     @Override
     default boolean isConnected(BlockState state, Direction face){
-        return state.getValue(getPropertyFromDirection(face));
+        return true;
     }
 
     static BooleanProperty getPropertyFromDirection(Direction direction){

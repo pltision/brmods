@@ -1,8 +1,6 @@
-package yee.pltision.backrooms.block.normal;
+package yee.pltision.backrooms.block.light;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -11,8 +9,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.type.BackroomsLightBlock;
-
-import java.util.Random;
 
 public class XZLight extends BackroomsLightBlock {
     public static EnumProperty<Direction.Axis> AXIS= BlockStateProperties.HORIZONTAL_AXIS;

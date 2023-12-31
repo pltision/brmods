@@ -1,4 +1,4 @@
-package yee.pltision.backrooms.block.normal;
+package yee.pltision.backrooms.block.light;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.type.BackroomsLightBlock;
 import yee.pltision.backrooms.block.type.IBackroomsLightBlock;
 
-public class WallLight extends BackroomsLightBlock {
+public class WallLight extends NonstaticLightBlock {
     public static final DirectionProperty FACING= BlockStateProperties.HORIZONTAL_FACING;
 
     public static final VoxelShape SOUTH_AABB =
@@ -37,9 +37,10 @@ public class WallLight extends BackroomsLightBlock {
             Block.box(12.0D, 0.0D, 4.0D,
                     16.0D, 16.0D, 12.0D);
 
-    public WallLight(Properties p_49795_) {
-        super(p_49795_);
+    public WallLight(Properties p_49795_, int beSteady, int beUnsteady, int flashTick) {
+        super(p_49795_, beSteady, beUnsteady, flashTick);
     }
+
 
     public BlockState rotate(BlockState p_54241_, Rotation p_54242_) {
         return p_54241_.setValue(FACING, p_54242_.rotation().rotate(p_54241_.getValue(FACING)));
@@ -50,7 +51,8 @@ public class WallLight extends BackroomsLightBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> p_54935_) {
+    public void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> p_54935_) {
+        super.createBlockStateDefinition(p_54935_);
         p_54935_.add(BlockStateProperties.HORIZONTAL_FACING);
     }
 

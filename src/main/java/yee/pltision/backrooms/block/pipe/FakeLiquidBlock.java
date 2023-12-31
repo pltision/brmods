@@ -53,7 +53,7 @@ public class FakeLiquidBlock extends AirBlock implements EntityBlock {
         boolean doClear=true,noChange=true;
         boolean blocking=state.getValue(BLOCKING);
         FakeLiquidBlockEntity entity= (FakeLiquidBlockEntity) level.getBlockEntity(pos);
-        assert entity != null;
+        if(entity==null) return;
 
         int it=0;
         for(Direction direction:Direction.values()){
@@ -75,8 +75,7 @@ public class FakeLiquidBlock extends AirBlock implements EntityBlock {
                     it++;
                 }
                 else if(t.getBlock() instanceof AirBlock&&!(t.getBlock() instanceof FakeLiquidBlock)) {
-                    if(state.getValue(LiquidBlock.LEVEL)>1)
-                        level.setBlockAndUpdate(pos.relative(direction), Blocks.WATER.defaultBlockState().setValue(LiquidBlock.LEVEL,state.getValue(LiquidBlock.LEVEL)));
+                    level.setBlockAndUpdate(pos.relative(direction), Blocks.WATER.defaultBlockState().setValue(LiquidBlock.LEVEL,Math.min(state.getValue(LiquidBlock.LEVEL),1)));
                 }
             }
 

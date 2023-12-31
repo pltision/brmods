@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.farmland.IFarmland;
+import yee.pltision.backrooms.block.lootblock.farmland.IFarmland;
 import yee.pltision.backrooms.block.moss.MossableBlock;
 
 import java.util.Random;

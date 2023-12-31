@@ -5,11 +5,11 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.farmland.IFarmland;
+import yee.pltision.backrooms.block.lootblock.farmland.IFarmland;
 import yee.pltision.backrooms.block.moss.MossCrackableBlock;
 import yee.pltision.backrooms.block.type.BackroomsHardBlock;
 
-public class ConcreteBlock extends BackroomsHardBlock implements IFarmland , MossCrackableBlock {
+public class ConcreteBlock extends BackroomsHardBlock implements IFarmland, MossCrackableBlock {
 
     public ConcreteBlock(Properties p_49795_) {
         super(p_49795_);

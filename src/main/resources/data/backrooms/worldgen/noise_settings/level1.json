@@ -44,7 +44,16 @@
     "lava": 0,
     "temperature": 0,
     "vegetation": 0,
-    "continents": 0,
+    "continents": {
+      "type":"mul",
+      "argument1":2,
+      "argument2":{
+        "type": "noise",
+        "noise": "surface",
+        "xz_scale": 0.01,
+        "y_scale": 0.1
+      }
+    },
     "erosion": "backrooms:level1/squares",
     "depth": 0,
     "ridges": 0,

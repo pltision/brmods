@@ -120,7 +120,7 @@ public interface ComplexPipe extends Pipe{
             }
         }
     }
-    default void placeLiquid(BlockState state, Level level, BlockPos pos){
+    default void placeLiquid(BlockState state, LevelAccessor level, BlockPos pos){
         if(state.getValue(LIQUID)!=PipeLiquidState.NONE){
             int l=state.getValue(LEVEL)>>1;
             if(l>0){

@@ -8,7 +8,7 @@
                 "projection":"rigid",
                 "element_type":"single_pool_element",
                 "location":"backrooms:level1/rooms/room/a",
-                "processors":"empty"
+                "processors":"backrooms:no_air"
             }
         },
         {
@@ -17,7 +17,7 @@
                 "projection":"rigid",
                 "element_type":"single_pool_element",
                 "location":"backrooms:level1/rooms/cross/b",
-                "processors":"empty"
+                "processors":"backrooms:no_air"
             }
         },
         {
@@ -26,7 +26,7 @@
                 "projection":"rigid",
                 "element_type":"single_pool_element",
                 "location":"backrooms:level1/rooms/cross/c",
-                "processors":"empty"
+                "processors":"backrooms:no_air"
             }
         },
         {
@@ -35,7 +35,7 @@
                 "projection":"rigid",
                 "element_type":"single_pool_element",
                 "location":"backrooms:level1/rooms/corridor/a",
-                "processors":"empty"
+                "processors":"backrooms:no_air"
             }
         },
         {
@@ -44,7 +44,7 @@
                 "projection":"rigid",
                 "element_type":"single_pool_element",
                 "location":"backrooms:level1/rooms/corridor/b",
-                "processors":"empty"
+                "processors":"backrooms:no_air"
             }
         },
         {
@@ -53,7 +53,7 @@
                 "projection":"rigid",
                 "element_type":"single_pool_element",
                 "location":"backrooms:level1/rooms/corridor/c",
-                "processors":"empty"
+                "processors":"backrooms:no_air"
             }
         },
         {
@@ -62,7 +62,7 @@
                 "projection":"rigid",
                 "element_type":"single_pool_element",
                 "location":"backrooms:level1/rooms/corridor/d",
-                "processors":"empty"
+                "processors":"backrooms:no_air"
             }
         },
 
@@ -110,6 +110,25 @@
                 "projection":"rigid",
                 "element_type":"single_pool_element",
                 "location":"backrooms:level1/spiral_staircase/a/a",
+                "processors":"empty"
+            }
+        },
+
+        {
+            "weight":1,
+            "element":{
+                "projection":"rigid",
+                "element_type":"single_pool_element",
+                "location":"backrooms:level1/street/a/end/a",
+                "processors":"empty"
+            }
+        },
+        {
+            "weight":1,
+            "element":{
+                "projection":"rigid",
+                "element_type":"single_pool_element",
+                "location":"backrooms:level1/street/a/end/b",
                 "processors":"empty"
             }
         },

@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.farmland.IWaterBlock;
+import yee.pltision.backrooms.block.lootblock.farmland.IWaterBlock;
 import yee.pltision.backrooms.block.moss.Moss;
 import yee.pltision.backrooms.block.moss.MossState;
 

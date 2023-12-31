@@ -1,4 +1,4 @@
-package yee.pltision.backrooms.block.farmland;
+package yee.pltision.backrooms.block.lootblock.farmland;
 
 public interface IWaterBlock {
     /**

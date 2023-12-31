@@ -16,6 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LightBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -34,14 +35,16 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.Util;
 import yee.pltision.backrooms.block.concrete.*;
+import yee.pltision.backrooms.block.light.NonstaticLight;
+import yee.pltision.backrooms.block.light.NonstaticLightBlock;
 import yee.pltision.backrooms.block.lootblock.EmptyShelfBlock;
 import yee.pltision.backrooms.block.lootblock.StackableShelfBlock;
 import yee.pltision.backrooms.block.moss.BrMossCarpetBlock;
 import yee.pltision.backrooms.block.mushroom.BrMushroomBlock;
 import yee.pltision.backrooms.block.mushroom.BrMyceliumBlock;
 import yee.pltision.backrooms.block.mushroom.MushroomItem;
-import yee.pltision.backrooms.block.normal.WallLight;
-import yee.pltision.backrooms.block.normal.XZLight;
+import yee.pltision.backrooms.block.light.WallLight;
+import yee.pltision.backrooms.block.light.XZLight;
 import yee.pltision.backrooms.block.pipe.AxisPipeBlock;
 import yee.pltision.backrooms.block.pipe.CrossPipeBlock;
 import yee.pltision.backrooms.block.pipe.FakeLiquidBlock;
@@ -210,7 +213,8 @@ public class BrBlocks {
         @Deprecated public static final RegistryObject<Block> WHITE_CONCRETE =REGISTER.register("normal/white_concrete",()->
                 new BackroomsHardBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.WHITE).requiresCorrectToolForDrops().strength(5F,14F)));
         public static final RegistryObject<Block> WALL_LIGHT =REGISTER.register("normal/wall_light",()->new WallLight(
-                BlockBehaviour.Properties.of(Material.DECORATION).lightLevel((p_187435_) -> 15).requiresCorrectToolForDrops().strength(1F, 10.0F).noOcclusion().sound(SoundType.STONE)
+                BlockBehaviour.Properties.of(Material.DECORATION).lightLevel(NonstaticLight.maxLightGetter()).requiresCorrectToolForDrops().strength(1F, 10.0F).noOcclusion().sound(SoundType.STONE).randomTicks(),
+                0x00ff,0x0fff,2
         ));
         public static final RegistryObject<Block> CEILING_LAMP=REGISTER.register("normal/ceiling_lamp",()-> new XZLight(
                 BlockBehaviour.Properties.of(Material.DECORATION).instabreak().lightLevel((p_187435_) -> 15).requiresCorrectToolForDrops().strength(1F, 10.0F).noCollission().sound(SoundType.GLASS)
@@ -280,7 +284,7 @@ public class BrBlocks {
         public static final RegistryObject<Block> IRON_PIPE_CROSS =REGISTER.register("pipe/iron/cross",()->
                 new CrossPipeBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.GRAY).requiresCorrectToolForDrops().strength(3F,10F).noOcclusion()));
         public static final RegistryObject<Block> FAKE_LIQUID =REGISTER.register("fake_liquid",()->
-                new FakeLiquidBlock( BlockBehaviour.Properties.of(Material.WATER_PLANT).noCollission().strength(100.0F).noDrops()));
+                new FakeLiquidBlock( BlockBehaviour.Properties.of(Material.AIR).strength(-1.0F, 3600000.8F).noDrops().noOcclusion().lightLevel(LightBlock.LIGHT_EMISSION)));
 
 //        @Deprecated
 //        public static final RegistryObject<Item> IRON_PIPE_ITEM =

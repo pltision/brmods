@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.normal.XZLight;
+import yee.pltision.backrooms.block.light.XZLight;
 import yee.pltision.backrooms.dimension.densityfunctioncontext.AbsoluteYFunctionContext;
 
 import java.util.List;

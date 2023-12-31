@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.farmland.IFarmland;
+import yee.pltision.backrooms.block.lootblock.farmland.IFarmland;
 import yee.pltision.backrooms.block.moss.MossableBlock;
 
 public class ConcreteRubbleBlock extends Block implements IFarmland, MossableBlock {

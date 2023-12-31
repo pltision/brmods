@@ -73,4 +73,5 @@ public class AxisPipeBlock extends Block implements AxisPipe {
     public BlockState getStateForPlacement(BlockPlaceContext p_54227_) {
         return this.defaultBlockState().setValue(AXIS,p_54227_.getClickedFace().getAxis());
     }
+
 }

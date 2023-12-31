@@ -1,4 +1,4 @@
-package yee.pltision.backrooms.block.farmland;
+package yee.pltision.backrooms.block.lootblock.farmland;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;

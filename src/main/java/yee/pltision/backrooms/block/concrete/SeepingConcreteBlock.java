@@ -6,8 +6,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.farmland.IFarmland;
-import yee.pltision.backrooms.block.farmland.IWaterBlock;
+import yee.pltision.backrooms.block.lootblock.farmland.IFarmland;
+import yee.pltision.backrooms.block.lootblock.farmland.IWaterBlock;
 
 import java.util.Random;
 

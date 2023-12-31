@@ -16,6 +16,7 @@ import java.util.Random;
 public class CrossPipeBlock extends Block implements CrossPipe {
     public CrossPipeBlock(Properties p_49795_) {
         super(p_49795_);
+        registerDefaultState(defaultBlockState().setValue(NORTH,false).setValue(SOUTH,false).setValue(EAST,false).setValue(WEST,false).setValue(UP,false).setValue(DOWN,false));
     }
 
     @Override

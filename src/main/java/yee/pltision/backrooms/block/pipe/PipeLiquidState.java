@@ -57,7 +57,7 @@ public enum PipeLiquidState implements StringRepresentable {
 
     @FunctionalInterface
     public interface PlaceFunction{
-        void place(int level, Direction from, BlockState state, Level world, BlockPos pos);
+        void place(int level, Direction from, BlockState state, LevelAccessor world, BlockPos pos);
     }
 
     @FunctionalInterface
