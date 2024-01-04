@@ -51,7 +51,7 @@ public class Level0TableRoom extends Feature<NoneFeatureConfiguration>{
         BlockPos origin=context.origin();
         Random r=context.random();
 
-        if(((origin.getX()&0b1_0000)|(origin.getZ()&0b1_0000)|r.nextInt(4))!=0) return false;
+        if(((origin.getX()&0b1_0000)|(origin.getZ()&0b1_0000)|r.nextInt(8))!=0) return false;
 
         if(LEVEL0_GRAPH==null)return false;
 
@@ -70,7 +70,7 @@ public class Level0TableRoom extends Feature<NoneFeatureConfiguration>{
         Direction dir=Direction.EAST;
         BlockPos it=new BlockPos(x-r.nextInt(4,8),floorY,z-r.nextInt(4,8));
 
-        BlockState AIR= Blocks.AIR.defaultBlockState(),WALL= BrBlocks.Level0.WALL.get().defaultBlockState(),
+        BlockState AIR= Blocks.AIR.defaultBlockState(),WALL= BrBlocks.Level0.WALL.get().defaultBlockState(),    //填充空气
                 CHARA=BrBlocks.WOODEN_CHARA.get().defaultBlockState(),TABLE=BrBlocks.WOODEN_TABLE.get().defaultBlockState();
 
         Level1ColumnFeature.fill(level,AIR,it.getX()+1,floorY,it.getZ(),it.getX()+wall[0],topY+1,it.getZ()+wall[1]);
