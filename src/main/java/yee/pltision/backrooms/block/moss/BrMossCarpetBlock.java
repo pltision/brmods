@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import org.jetbrains.annotations.NotNull;
-import yee.pltision.backrooms.block.lootblock.farmland.IFarmland;
-import yee.pltision.backrooms.block.lootblock.farmland.IWaterBlock;
+import yee.pltision.backrooms.block.farmland.Farmland;
+import yee.pltision.backrooms.block.farmland.IWaterBlock;
 
 import java.util.Random;
 
@@ -28,12 +28,12 @@ public class BrMossCarpetBlock extends CarpetBlock implements IWaterBlock, Moss 
     }
 
     public double getPlantNutrient(BlockState state, LevelReader level, BlockPos pos){
-        return IFarmland.getNutrient(level,pos.below());
+        return Farmland.getNutrient(level,pos.below());
     }
     public double getWet(BlockState state, LevelReader level,BlockPos pos){
         BlockPos underPos=pos.below();
         BlockState underState=level.getBlockState(underPos);
-        return underState.getBlock()instanceof IFarmland farmland?farmland.getWet(underState,level,underPos):0;
+        return underState.getBlock()instanceof Farmland farmland?farmland.getWet(underState,level,underPos):0;
     }
     public BrMossCarpetBlock(Properties p_152915_) {
         super(p_152915_);

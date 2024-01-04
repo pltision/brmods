@@ -3,6 +3,7 @@ package yee.pltision.backrooms.block.light;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -21,7 +22,9 @@ import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.type.BackroomsLightBlock;
 import yee.pltision.backrooms.block.type.IBackroomsLightBlock;
 
-public class WallLight extends NonstaticLightBlock {
+import java.util.Random;
+
+public class WallLight extends NonstaticAndRandomNoPowerLightBlock {
     public static final DirectionProperty FACING= BlockStateProperties.HORIZONTAL_FACING;
 
     public static final VoxelShape SOUTH_AABB =
@@ -37,16 +40,16 @@ public class WallLight extends NonstaticLightBlock {
             Block.box(12.0D, 0.0D, 4.0D,
                     16.0D, 16.0D, 12.0D);
 
-    public WallLight(Properties p_49795_, int beSteady, int beUnsteady, int flashTick) {
-        super(p_49795_, beSteady, beUnsteady, flashTick);
+    public WallLight(Properties p_49795_, double beSteady, double beUnsteady, double beNoPower, double bePower, int flashTick, double flashWhenTurnOn, double flashWhenTurnOff) {
+        super(p_49795_, beSteady, beUnsteady, beNoPower, bePower, flashTick, flashWhenTurnOn, flashWhenTurnOff);
     }
 
 
-    public BlockState rotate(BlockState p_54241_, Rotation p_54242_) {
+    public @NotNull BlockState rotate(BlockState p_54241_, Rotation p_54242_) {
         return p_54241_.setValue(FACING, p_54242_.rotation().rotate(p_54241_.getValue(FACING)));
     }
 
-    public BlockState mirror(BlockState p_54238_, Mirror p_54239_) {
+    public @NotNull BlockState mirror(BlockState p_54238_, Mirror p_54239_) {
         return p_54238_.setValue(FACING, p_54239_.rotation().rotate(p_54238_.getValue(FACING)));
     }
 
@@ -70,7 +73,7 @@ public class WallLight extends NonstaticLightBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState p_60555_, @NotNull BlockGetter p_60556_, @NotNull BlockPos p_60557_, @NotNull CollisionContext p_60558_) {
+    public @NotNull VoxelShape getShape(BlockState p_60555_, @NotNull BlockGetter p_60556_, @NotNull BlockPos p_60557_, @NotNull CollisionContext p_60558_) {
         switch (p_60555_.getValue(FACING)){
             case EAST -> {
                 return EAST_AABB;
@@ -106,7 +109,8 @@ public class WallLight extends NonstaticLightBlock {
         return p_60526_.getBlockState(back).getMaterial().isSolid();
     }
 
-    public BlockState updateShape(@NotNull BlockState p_57503_, @NotNull Direction p_57504_, @NotNull BlockState p_57505_, @NotNull LevelAccessor p_57506_, @NotNull BlockPos p_57507_, @NotNull BlockPos p_57508_) {
+    public @NotNull BlockState updateShape(@NotNull BlockState p_57503_, @NotNull Direction p_57504_, @NotNull BlockState p_57505_, @NotNull LevelAccessor p_57506_, @NotNull BlockPos p_57507_, @NotNull BlockPos p_57508_) {
         return this.canSurvive(p_57503_, p_57506_, p_57507_) ? super.updateShape(p_57503_, p_57504_, p_57505_, p_57506_, p_57507_, p_57508_):Blocks.AIR.defaultBlockState();
     }
+
 }

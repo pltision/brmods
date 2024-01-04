@@ -6,12 +6,12 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.lootblock.farmland.IFarmland;
-import yee.pltision.backrooms.block.lootblock.farmland.IWaterBlock;
+import yee.pltision.backrooms.block.farmland.Farmland;
+import yee.pltision.backrooms.block.farmland.IWaterBlock;
 
 import java.util.Random;
 
-public class SeepingConcreteBlock extends ConcreteBlock implements IWaterBlock,IFarmland {
+public class SeepingConcreteBlock extends ConcreteBlock implements IWaterBlock, Farmland {
     public SeepingConcreteBlock(Properties p_49795_) {
         super(p_49795_);
     }
@@ -42,7 +42,7 @@ public class SeepingConcreteBlock extends ConcreteBlock implements IWaterBlock,I
         if((random.nextInt()&0b11)==0) {
 //            System.out.println("yee");
             int x=pos.getX(),y=pos.getY(),z=pos.getZ();
-            double dry=IFarmland.randomUpToDownWet(1, level, pos);
+            double dry= Farmland.randomUpToDownWet(1, level, pos);
             if(dry<0.5){
                 //System.out.println(dry);
                 if((random.nextInt()&0b11)==0){
@@ -51,10 +51,10 @@ public class SeepingConcreteBlock extends ConcreteBlock implements IWaterBlock,I
             }
 
             BlockPos newPos=new BlockPos(x+random.nextInt()%2, y+random.nextInt()%2, z+random.nextInt()%2);
-            double newDry = IFarmland.randomUpToDownWet(1, level, newPos);
+            double newDry = Farmland.randomUpToDownWet(1, level, newPos);
             BlockState newState = level.getBlockState(newPos);
-            if (newState.getBlock() instanceof IFarmland farmland) {
-                if (newDry > 0.8&&newDry < 2) {
+            if (newState.getBlock() instanceof Farmland farmland) {
+                if (newDry > 1&&newDry < 2) {
                     BlockState dryState=farmland.beWet(newState, level, newPos);
                     if(newState!=dryState) level.setBlockAndUpdate(newPos,dryState);
                 }

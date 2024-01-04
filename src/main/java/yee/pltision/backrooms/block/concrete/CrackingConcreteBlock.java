@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.lootblock.farmland.IFarmland;
+import yee.pltision.backrooms.block.farmland.Farmland;
 import yee.pltision.backrooms.block.moss.MossableBlock;
 
 import java.util.Random;
@@ -39,7 +39,7 @@ public class CrackingConcreteBlock extends ConcreteBlock implements MossableBloc
 
     @Override
     public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull Random random) {
-        if((random.nextInt()&0b111)==0 && IFarmland.randomUpToDownWet(1, level, pos)<0.5) {
+        if((random.nextInt()&0b111)==0 && Farmland.randomUpToDownWet(1, level, pos)<0.5) {
             int value=state.getValue(STAGE);
             if(value==2) level.setBlock(pos,BrBlocks.Concretes.CONCRETE_RUBBLE.get().defaultBlockState(),3);
             else level.setBlock(pos,state.setValue(STAGE,value+1),3);

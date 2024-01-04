@@ -2,7 +2,7 @@
     "type":"bastion_remnant",
     "config":{
         "start_pool":"backrooms:level1/rooms/cross",
-        "size":7
+        "size":5
     },
     "biomes":["backrooms:level1/square"],
     "step":"underground_structures",

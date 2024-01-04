@@ -5,11 +5,11 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.backrooms.block.BrBlocks;
-import yee.pltision.backrooms.block.lootblock.farmland.IFarmland;
+import yee.pltision.backrooms.block.farmland.Farmland;
 import yee.pltision.backrooms.block.moss.MossCrackableBlock;
 import yee.pltision.backrooms.block.type.BackroomsHardBlock;
 
-public class ConcreteBlock extends BackroomsHardBlock implements IFarmland, MossCrackableBlock {
+public class ConcreteBlock extends BackroomsHardBlock implements Farmland, MossCrackableBlock {
 
     public ConcreteBlock(Properties p_49795_) {
         super(p_49795_);
@@ -17,7 +17,7 @@ public class ConcreteBlock extends BackroomsHardBlock implements IFarmland, Moss
 
     @Override
     public double getWet(BlockState state, LevelReader level, BlockPos pos) {
-        return IFarmland.randomPlaneWet(0.5,level,pos);
+        return Farmland.randomPlaneWet(0.5,level,pos);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ConcreteBlock extends BackroomsHardBlock implements IFarmland, Moss
 
     @Override
     public double nutrientFactor(BlockState state, @NotNull LevelReader level, BlockPos pos) {
-        return 0.5* IFarmland.biomeNutrientFactor(level,pos);
+        return 0.5* Farmland.biomeNutrientFactor(level,pos);
     }
 
     @Override

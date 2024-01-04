@@ -12,8 +12,9 @@ import yee.pltision.backrooms.block.type.BackroomsLightBlock;
 import java.util.Random;
 
 public class NonstaticLightBlock extends BackroomsLightBlock implements NonstaticLight {
-    final int beSteady,beUnsteady,flashTick;
-    public NonstaticLightBlock(Properties p_49795_,int beSteady,int beUnsteady,int flashTick) {
+    double beSteady,beUnsteady;
+    int flashTick;
+    public NonstaticLightBlock(Properties p_49795_,double beSteady,double beUnsteady,int flashTick) {
         super(p_49795_);
         this.beSteady=beSteady;
         this.beUnsteady=beUnsteady;
@@ -34,7 +35,7 @@ public class NonstaticLightBlock extends BackroomsLightBlock implements Nonstati
     @Override
     public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull Random random) {
         if(state.getValue(STEADY)){
-            if((random.nextInt()&0xffff)<beUnsteady){
+            if(random.nextDouble()<beUnsteady){
                 level.setBlock(pos,state.setValue(STEADY,false),3);
                 level.scheduleTick(pos,this,flashTick);
             }
@@ -45,13 +46,10 @@ public class NonstaticLightBlock extends BackroomsLightBlock implements Nonstati
     @Override
     public void tick(BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull Random random) {
         if(!state.getValue(STEADY)){
-//            int t;
-//            if((t=(random.nextInt()&0xffff))<beSteady){
-            if((random.nextInt()&0xffff)<beSteady){
+            if(random.nextDouble()<beSteady){
                 level.setBlock(pos,state.setValue(STEADY,true).setValue(LIGHTING,state.getValue(DEFAULT_STATE)),3);
             }
             else{
-//                System.out.println(t+" "+beSteady);
                 boolean lighting=state.getValue(LIGHTING);
                 if(random.nextBoolean()){
                     level.setBlock(pos,state.setValue(LIGHTING,!lighting),3);

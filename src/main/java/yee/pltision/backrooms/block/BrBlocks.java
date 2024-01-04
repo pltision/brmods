@@ -3,9 +3,13 @@ package yee.pltision.backrooms.block;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -14,10 +18,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LightBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,6 +28,8 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,6 +40,8 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import yee.pltision.Util;
 import yee.pltision.backrooms.block.concrete.*;
+import yee.pltision.backrooms.block.crate.CrateBlock;
+import yee.pltision.backrooms.block.farmland.Farmland;
 import yee.pltision.backrooms.block.light.NonstaticLight;
 import yee.pltision.backrooms.block.light.NonstaticLightBlock;
 import yee.pltision.backrooms.block.lootblock.EmptyShelfBlock;
@@ -50,6 +57,7 @@ import yee.pltision.backrooms.block.pipe.CrossPipeBlock;
 import yee.pltision.backrooms.block.pipe.FakeLiquidBlock;
 import yee.pltision.backrooms.block.type.BackroomsHardBlock;
 
+import java.net.PortUnreachableException;
 import java.util.ArrayList;
 
 @SuppressWarnings("unused")
@@ -153,6 +161,9 @@ public class BrBlocks {
                     ))
             );
 
+    public static final RegistryObject<Block> FOG=REGISTER.register("fog",()->new FogBlock(BlockBehaviour.Properties.of(Material.AIR).noCollission().noDrops().air()));
+    public static final  RegistryObject<Item> FOG_ITEM = ITEM_REGISTER.register("fog",()-> new BlockItem(FOG.get(),new Item.Properties()));
+
     @Mod.EventBusSubscriber
     public static class WoodenShelves {
 
@@ -204,6 +215,8 @@ public class BrBlocks {
 
         }
 
+
+
     }
 
     @Mod.EventBusSubscriber
@@ -214,7 +227,7 @@ public class BrBlocks {
                 new BackroomsHardBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.WHITE).requiresCorrectToolForDrops().strength(5F,14F)));
         public static final RegistryObject<Block> WALL_LIGHT =REGISTER.register("normal/wall_light",()->new WallLight(
                 BlockBehaviour.Properties.of(Material.DECORATION).lightLevel(NonstaticLight.maxLightGetter()).requiresCorrectToolForDrops().strength(1F, 10.0F).noOcclusion().sound(SoundType.STONE).randomTicks(),
-                0x00ff,0x0fff,2
+                3/128D,1/16D,1/32D,5/8D,2,1/3D,2/3D
         ));
         public static final RegistryObject<Block> CEILING_LAMP=REGISTER.register("normal/ceiling_lamp",()-> new XZLight(
                 BlockBehaviour.Properties.of(Material.DECORATION).instabreak().lightLevel((p_187435_) -> 15).requiresCorrectToolForDrops().strength(1F, 10.0F).noCollission().sound(SoundType.GLASS)
@@ -264,6 +277,21 @@ public class BrBlocks {
                 ITEM_REGISTER.register("white_concrete",()-> new BlockItem(WHITE_CONCRETE.get(),new Item.Properties()));
     }
 
+    public static final RegistryObject<Item> FARMLAND_DEBUG_STICK=ITEM_REGISTER.register("farmland_debug_stick",()->new Item(new Item.Properties()){
+        @Override
+//        @OnlyIn(Dist.CLIENT)
+        public @NotNull InteractionResult useOn(@NotNull UseOnContext context) {
+            BlockState state=context.getLevel().getBlockState(context.getClickedPos());
+            if(state.getBlock() instanceof Farmland farmland){
+                double wet= farmland.getWet(state,context.getLevel(),context.getClickedPos());
+                double nutrient= farmland.nutrientFactor(state,context.getLevel(),context.getClickedPos());
+                if(context.getPlayer()!=null)
+                    context.getPlayer().sendMessage(new TextComponent("wet="+wet+" nutrient="+nutrient), net.minecraft.Util.NIL_UUID);
+            }
+            return super.useOn(context);
+        }
+    });
+
     @Mod.EventBusSubscriber
     public static class Mosses{
         public static final RegistryObject<Block> MOSS_CARPET=REGISTER.register("moss_carpet",()->
@@ -307,6 +335,12 @@ public class BrBlocks {
                             }
                         }
                 );
+    }
+
+    @Mod.EventBusSubscriber
+    public static class LootBlock{
+        public static final RegistryObject<Block> CRATE=REGISTER.register("crate",()->
+                new CrateBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).sound(SoundType.WOOD).requiresCorrectToolForDrops().strength(3F, 10.0F)));
     }
 
 
